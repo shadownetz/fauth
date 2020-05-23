@@ -1,0 +1,85 @@
+*{
+    font-family: "Lucida Console", Courier, monospace;
+}
+body{
+    background: #070034;
+    overflow-x: hidden;
+    color: #ffffff;
+}
+.anim-delay-03{
+    animation-delay: .3s;
+}
+
+@keyframes sw_words {
+    10%{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+    21%{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+    30%{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+    34%{
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+}
+@media screen and (min-width: 320px){
+    #particles-js{
+        position: absolute;
+        width:100%;
+        height:100%;
+        margin-left: 0
+    }
+    #fauth-main{
+        min-height: 50vh;
+        background: no-repeat -300px 0;
+        background-size: contain;
+    }
+    #fauth-main .fauth-logo{
+        width: 100px;
+        height:100px
+    }
+    #fauth-main #main-body{
+        padding-top: 20%
+    }
+    #fauth-main #main-body h1 b{
+        color: #9e8ed4;
+    }
+    #fauth-main #main-body .switch_words{
+        position: relative;
+    }
+    #fauth-main #main-body .switch_words p{
+        position: absolute;
+        color: #736799;
+        font-weight: bold;
+        margin-top: 10px;
+        text-transform: lowercase;
+        transform: translateY(20px);
+        opacity: 0;
+        animation: sw_words 12s linear infinite 0s;
+    }
+    #fauth-main #main-body .switch_words p:nth-child(2){
+        animation-delay: 4s;
+    }
+    #fauth-main #main-body .switch_words p:nth-child(3){
+        animation-delay: 8s;
+    }
+
+}
+
+@media screen and (min-width: 1024px){
+    #particles-js{
+        width:70%;
+        margin-left: 30%
+    }
+    #fauth-main{
+        min-height:100vh;
+        background-image: url("../images/bg/face-wireframe.png");
+    }
+}
