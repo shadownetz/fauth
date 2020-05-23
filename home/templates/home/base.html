@@ -4,6 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>FAUTH</title>
+    <!-- Favicon-->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'home/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'home/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'home/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'home/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'home/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <!-- Animate Css-->
     <link rel="stylesheet" href="{% static 'home/vendors/animate/animate.min.css' %}">
     <!-- Font Awesome -->
@@ -16,23 +24,42 @@
     <link rel="stylesheet" href="{% static 'home/css/index.css' %}">
 </head>
 <body>
-
-<div class="container-fluid" id="fauth-main">
-    <div id="particles-js"></div>
-    <header class="float-right">
-        <img class="animate__animated animate__heartBeat anim-delay-03 img-fluid fauth-logo" src="{% static 'home/images/logo/fauth_logo.png' %}" alt="fauth logo">
-    </header>
+<div id="preloader">
+    <div class="single-line"></div>
+</div>
+<div class="container-fluid">
     <div class="row">
-        <div class="col-lg-7 offset-lg-5 text-center text-capitalize" id="main-body">
-            <h1 class="animate__animated animate__fadeInUp anim-delay-03 description"><b>Facial Authentication System</b></h1>
-            <div class="switch_words">
-                <p>Automatically <span class="text-primary">recognize</span>  images and <span class="text-warning">retrieve</span>  related records...</p>
-                <p>Stores multiple individual images to achieve <span class="text-danger">high</span> <span class="text-info">accuracy</span></p>
-                <p>made with <i class="fa fa-heart text-success"></i> by <span class="text-danger">Jude</span></p>
+        <div class="container-fluid" id="fauth-main">
+            <div id="particles-js"></div>
+            <header class="float-right">
+                <img class="animate__animated animate__heartBeat anim-delay-03 img-fluid fauth-logo" src="{% static 'home/images/logo/fauth_logo.png' %}" alt="fauth logo">
+            </header>
+            <div class="row">
+                <div class="col-lg-7 col-md-12 offset-lg-5 text-center text-capitalize" id="main-body">
+                    <h1 class="animate__animated animate__fadeInUp anim-delay-03 description"><b>Facial Authentication System</b></h1>
+                    <div class="switch_words">
+                        <p>Automatically <span class="text-primary">recognize</span>  images and <span class="text-warning">retrieve</span>  related records...</p>
+                        <p>Stores multiple individual images to achieve <span class="text-danger">high</span> <span class="text-info">accuracy</span></p>
+                        <p>made with <i class="fa fa-heart text-success"></i> by <span class="text-danger">Jude</span></p>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-12 offset-lg-5 text-center" id="fauth-options">
+                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="login">
+                        <i class="fa fa-door-open"></i>
+                    </a>
+                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="register">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="moving-lines top bg-primary"></div>
+<div class="moving-lines bottom bg-danger"></div>
+<div class="moving-lines left"></div>
+<div class="moving-lines right bg-warning"></div>
 
 <input type="hidden" id="particles-json-url" value="{% static 'home/vendors/particles/particles.json' %}">
 

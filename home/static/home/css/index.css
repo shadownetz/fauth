@@ -1,15 +1,20 @@
+:root{
+    --fauth-primary-color: #9e8ed4;
+    --fauth-highlight-color: #007bff;
+    --fauth-accent-color: #070034
+}
 *{
     font-family: "Lucida Console", Courier, monospace;
 }
 body{
-    background: #070034;
-    overflow-x: hidden;
+    background: var(--fauth-accent-color);
     color: #ffffff;
 }
 .anim-delay-03{
     animation-delay: .3s;
 }
 
+/* Switching words animation */
 @keyframes sw_words {
     10%{
         transform: translateY(0px);
@@ -29,12 +34,41 @@ body{
     }
 
 }
+
+/* Moving lines animations */
+@keyframes move_lines_left_to_right {
+    0%, 100%{ left: 0; opacity: 0;}
+    4%{ left: 20%; opacity: 0.7;}
+    8%{ left: 40%; opacity: 0.7;}
+    12%{ left: 70%; opacity: 0;}
+}
+@keyframes move_lines_right_to_left {
+    0%, 100%{ right: 0; opacity: 0;}
+    4%{ right: 20%; opacity: 0.7;}
+    8%{ right: 40%; opacity: 0.7;}
+    12%{ right: 70%; opacity: 0;}
+}
+
+@keyframes move_lines_top_to_bottom {
+    0%, 100%{ top: 0; opacity: 0;}
+    4%{ top: 20%; opacity: 0.7;}
+    8%{ top: 40%; opacity: 0.7;}
+    12%{top: 70%; opacity: 0;}
+}
+@keyframes move_lines_bottom_to_top {
+    0%, 100%{ bottom: 0; opacity: 0;}
+    4%{ bottom: 20%; opacity: 0.7;}
+    8%{ bottom: 40%; opacity: 0.7;}
+    12%{bottom: 70%; opacity: 0;}
+}
+
 @media screen and (min-width: 320px){
     #particles-js{
         position: absolute;
-        width:100%;
+        width:auto;
         height:100%;
-        margin-left: 0
+        margin-left: 0;
+        overflow: hidden;
     }
     #fauth-main{
         min-height: 50vh;
@@ -49,13 +83,15 @@ body{
         padding-top: 20%
     }
     #fauth-main #main-body h1 b{
-        color: #9e8ed4;
+        color: var(--fauth-primary-color);
     }
     #fauth-main #main-body .switch_words{
         position: relative;
+        min-height: 70px;
     }
     #fauth-main #main-body .switch_words p{
         position: absolute;
+        left: 10%;
         color: #736799;
         font-weight: bold;
         margin-top: 10px;
@@ -70,16 +106,96 @@ body{
     #fauth-main #main-body .switch_words p:nth-child(3){
         animation-delay: 8s;
     }
+    #fauth-options a{
+        display: inline-block;
+        color: var(--fauth-primary-color);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px solid var(--fauth-highlight-color);
+        padding-top: 13px;
+        transition: all .3s linear;
+    }
+    #fauth-options a:hover{
+        background-color: var(--fauth-primary-color);
+        border: 0;
+        color: #413857
+    }
+    .moving-lines{
+        position: absolute;
+        width:0;
+        height:0;
+        z-index: 100;
+        opacity: 0;
+    }
+    .moving-lines.top, .moving-lines.bottom{
+        width: 30%;
+        height: 3px;
 
+    }
+    .moving-lines.left, .moving-lines.right{
+        width: 3px;
+        height: 30%;
+    }
+    .moving-lines.top{
+        top: 0;
+        animation: move_lines_left_to_right 4s linear infinite 0s;
+    }
+    .moving-lines.bottom{
+        bottom: 0;
+        animation: move_lines_right_to_left 4s linear infinite 1s;
+    }
+    .moving-lines.left{
+        left: 0;
+        bottom:0;
+        background-color: var(--fauth-primary-color);
+        animation-direction: reverse;
+        animation: move_lines_bottom_to_top 4s linear infinite 1.5s;
+    }
+    .moving-lines.right{
+        top: 0;
+        right: 0;
+        animation: move_lines_top_to_bottom 4s linear infinite 0.5s;
+    }
+    #preloader{
+        position: absolute;
+        top: 0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        background: rgba(7,0,52, .9) url("../images/logo/fauth_logo.png") no-repeat center fixed;
+        background-size: 20%;
+        z-index: 99999999;
+    }
+    #preloader > .single-line{
+        position: relative;
+        width: 70px;
+        height: 5px;
+        background-image: radial-gradient(rgba(152, 142, 212,.5), rgba(7,0,52,.5) );
+        top: 70%;
+        left: 43%;
+        opacity: 0;
+        border-radius: 5px;
+        animation: fauth_loading 0.5s linear infinite 0s;
+    }
 }
 
+@keyframes fauth_loading {
+    0%{ opacity: 0;left: 43%;}
+    40%{ opacity: 1; left: 45%;}
+    80%{opacity: 1; left: 49%}
+    100%{opacity: 0; left: 57%}
+}
 @media screen and (min-width: 1024px){
     #particles-js{
-        width:70%;
+        width:65%;
         margin-left: 30%
     }
     #fauth-main{
         min-height:100vh;
         background-image: url("../images/bg/face-wireframe.png");
+    }
+    #fauth-main #main-body .switch_words p{
+        left: 0
     }
 }
