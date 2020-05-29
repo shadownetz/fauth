@@ -1,0 +1,48 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'home/css/index.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="container-fluid" id="fauth-main">
+                <div id="particles-js"></div>
+                <header class="float-right">
+                    <img class="animate__animated animate__heartBeat anim-delay-03 img-fluid fauth-logo" src="{% static 'home/images/logo/fauth_logo.png' %}" alt="fauth logo">
+                </header>
+                <div class="row">
+                    <div class="col-lg-7 col-md-12 offset-lg-5 text-center text-capitalize" id="main-body">
+                        <h1 class="animate__animated animate__fadeInUp anim-delay-03 description"><b>Facial Authentication System</b></h1>
+                        <div class="switch_words">
+                            <p>Automatically <span class="text-primary">recognize</span>  images and <span class="text-warning">retrieve</span>  related records...</p>
+                            <p>Stores multiple individual images to achieve <span class="text-danger">high</span> <span class="text-info">accuracy</span></p>
+                            <p>made with <i class="fa fa-heart text-success"></i> by <span class="text-danger">Jude</span></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-12 offset-lg-5 text-center" id="fauth-options">
+                        <a href="{% url 'home:login' %}" data-toggle="tooltip" data-placement="bottom" title="login">
+                            <i class="fa fa-door-open"></i>
+                        </a>
+                        <a href="{% url 'home:register' %}" data-toggle="tooltip" data-placement="bottom" title="register">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="moving-lines top bg-primary"></div>
+    <div class="moving-lines bottom bg-danger"></div>
+    <div class="moving-lines left"></div>
+    <div class="moving-lines right bg-warning"></div>
+    <input type="hidden" id="particles-json-url" value="{% static 'home/vendors/particles/particles.json' %}">
+
+{% endblock %}
+
+{% block script %}
+    <!-- Particle JS-->
+    <script src="{% static 'home/vendors/particles/particles.min.js' %}"></script>
+    <!-- App script-->
+    <script src="{% static 'home/js/app.js' %}"></script>
+{% endblock %}
