@@ -15,17 +15,29 @@
                         <a href="{% url 'home:index' %}">
                             <img class="fauth-logo img-fluid" src="{% static 'home/images/logo/fauth_logo.png' %}" alt="fauth logo">
                         </a>
-                        <form role="form" method="post" id="fauth-register-form">
+                        <form role="form" method="post" id="fauth-register-form" enctype="multipart/form-data">
+                            {% csrf_token %}
                             <div class="col-12">
                                 <div class="row justify-content-center">
                                     <div class="form-group">
-                                        <label for="id_images" class="col-12 upload-images"
+                                        <label for="id_image" class="col-12 upload-images"
                                                data-toggle="tooltip"
-                                        data-placement="left"
-                                        title="you can upload multiple passport images to increase efficiency in recognition">
-                                            <input type="file" id="id_images" multiple accept="image/*">
+                                               data-placement="left"
+                                               title="Upload a clear image passport">
+                                            {{ image_form.image }}
                                             <i class="fa fa-images fa-2x"></i>
                                         </label>
+                                        <label id="webcam-snapshot" for="id_snapshot"
+                                               class="col-12 upload-images"
+                                               data-toggle="tooltip"
+                                               data-placement="left"
+                                               title="Take snapshot from WebCam">
+                                            {{ image_form.snapshot }}
+                                            <i class="fa fa-camera fa-2x"></i>
+                                        </label>
+                                        <span id="switch-image-option" class="hover" data-toggle="tooltip" data-placement="right" title="toggle upload option">
+                                            <i class="fa fa-sync js-image-switch"></i>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -52,15 +64,50 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+        <!-- Webcam Modal -->
+        <div class="modal fade" id="webCamModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content webcam-content">
+                    <div class="modal-header webcam-header">
+                        <img class="fauth-logo img-fluid" src="{% static 'home/images/logo/fauth_logo.png' %}" alt="fauth logo">
+                        <button type="button" class="close" id="webcam-close-btn" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-7 webcam-image-block text-left" id="webcam-camera">
+                                    <img class="webcam-preview" src="" alt="image preview">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer webcam-footer justify-content-center">
+                        <button type="button" class="btn" id="webcam-button">
+                            <i class="fa fa-circle-notch"></i>
+                        </button>
+                        <button id="webcam-button-next" type="button" class="btn">
+                            continue
+                        </button>
+                        <button id="webcam-button-retake" type="button" class="btn">
+                            <i class="fa fa-repeat">retake</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <input type="hidden" value="{% url 'home:api_email_exist' %}" id="js-email-exist-url">
     <input type="hidden" id="particles-json-url" value="{% static 'home/vendors/particles/particles-nasa.json' %}">
 {% endblock %}
 
 {% block script %}
     <!-- Particle JS-->
     <script src="{% static 'home/vendors/particles/particles.min.js' %}"></script>
+    <!-- Webcam JS -->
+    <script src="{% static 'home/vendors/webcam/webcam.min.js' %}"></script>
     <!-- App script-->
-    <script src="{% static 'home/js/app.js' %}"></script>
+    <script src="{% static 'home/js/register.js' %}"></script>
 {% endblock %}

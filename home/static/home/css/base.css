@@ -77,3 +77,7 @@ input.form-control, input.form-control:focus{
     border-color: var(--fauth-highlight-color);
     color: var(--fauth-primary-color)
 }
+
+.hover:hover{
+    cursor: pointer;
+}
