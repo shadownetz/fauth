@@ -5,7 +5,7 @@ $(function(){
     /* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
     const particles_url = $('#particles-json-url').val();
     particlesJS.load('particles-js', particles_url, function() {
-        console.info('callback - particles.js config loaded');
+        console.info('particles.js config loaded');
     });
 
     /* Initialize tooltips */
@@ -31,6 +31,9 @@ $(function(){
         alt: 'image preview',
         class: 'img-fluid webcam-preview'
     });
+    /* Image Value */
+    let image = $('#id_image');
+    let snapshot = $('#id_snapshot');
 
     /* Load WebCam Modal */
     $('#webcam-snapshot').click(function(event){
@@ -54,7 +57,7 @@ $(function(){
         event.stopPropagation();
         Webcam.snap(function (dataURI) {
             // load image data URI
-            $('#id_snapshot').val(dataURI);
+            snapshot.val(dataURI);
             webCamPreview.attr('src', dataURI);
         });
         Webcam.reset();
@@ -97,9 +100,18 @@ $(function(){
     }
 
     /* Handle Registration */
-    let images;
-    $('#id_image').on('change', function(e){
-        images = e.target.files;
+    image.on('change', function(e){
+        let file = e.target.files[0];
+        let file_type = file.name.split('.').pop();
+            if($.inArray(file_type, ['jpg','png','jpeg']) < 0){
+                toastr.warning("The image uploaded is of invalid type", "Hey there!");
+            }else{
+                let reader = new FileReader();
+                reader.onload = ()=>{
+                    snapshot.val(reader.result)
+                };
+                reader.readAsDataURL(file)
+            }
     });
     $('#fauth-register-form').on('submit',async function register(event){
         event.preventDefault();
@@ -110,17 +122,9 @@ $(function(){
         let email_exist_url = $('#js-email-exist-url').val();
 
         // validate images type
-        if(images){
-            for(let file of images){
-                let file_type = file.name.split('.').pop();
-                if($.inArray(file_type, ['jpg','png','jpeg']) < 0){
-                    toastr.warning("Some or all of the images are of invalid type", "Hey there!");
-                    return
-                }
-            }
-        }else{
-            toastr.error("At least one passport image should be uploaded", "Error");
-            return;
+        if(!image.val()){
+            toastr.error("You must provide a passport image", "Error");
+            return
         }
         if(!name || !email || !phone){
             toastr.warning("All input fields should not be blank", "Hey there!");

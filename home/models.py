@@ -61,12 +61,12 @@ class Candidate(models.Model):
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<email>/<filename>
-    return 'images/users/{0}/{1}'.format(instance.userImage.email, filename)
+    return 'images/users/{0}/{1}'.format(instance.user.email, filename)
 
 
 def candidate_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<email>/<filename>
-    return 'images/candidates/{0}/{1}'.format(instance.candidateImage.email, filename)
+    return 'images/candidates/{0}/{1}'.format(instance.candidate.email, filename)
 
 
 class UserImage(models.Model):

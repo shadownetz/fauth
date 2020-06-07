@@ -24,7 +24,7 @@
                                                data-toggle="tooltip"
                                                data-placement="left"
                                                title="Upload a clear image passport">
-                                            {{ image_form.image }}
+                                            <input type="file" id="id_image">
                                             <i class="fa fa-images fa-2x"></i>
                                         </label>
                                         <label id="webcam-snapshot" for="id_snapshot"
@@ -32,7 +32,7 @@
                                                data-toggle="tooltip"
                                                data-placement="left"
                                                title="Take snapshot from WebCam">
-                                            {{ image_form.snapshot }}
+                                            {{ form.snapshot }}
                                             <i class="fa fa-camera fa-2x"></i>
                                         </label>
                                         <span id="switch-image-option" class="hover" data-toggle="tooltip" data-placement="right" title="toggle upload option">
@@ -104,6 +104,7 @@
 {% endblock %}
 
 {% block script %}
+    <script src="{% static 'home/js/csrf_ajax.js' %}"></script>
     <!-- Particle JS-->
     <script src="{% static 'home/vendors/particles/particles.min.js' %}"></script>
     <!-- Webcam JS -->
