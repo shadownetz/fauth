@@ -103,15 +103,15 @@ $(function(){
     image.on('change', function(e){
         let file = e.target.files[0];
         let file_type = file.name.split('.').pop();
-            if($.inArray(file_type, ['jpg','png','jpeg']) < 0){
-                toastr.warning("The image uploaded is of invalid type", "Hey there!");
-            }else{
-                let reader = new FileReader();
-                reader.onload = ()=>{
-                    snapshot.val(reader.result)
-                };
-                reader.readAsDataURL(file)
-            }
+        if($.inArray(file_type, ['jpg','png','jpeg']) < 0){
+            toastr.warning("The image uploaded is of invalid type", "Hey there!");
+        }else{
+            let reader = new FileReader();
+            reader.onload = ()=>{
+                snapshot.val(reader.result)
+            };
+            reader.readAsDataURL(file)
+        }
     });
     $('#fauth-register-form').on('submit',async function register(event){
         event.preventDefault();
@@ -120,40 +120,51 @@ $(function(){
         let email = $('#id_email').val();
         let phone = $('#id_phone').val();
         let email_exist_url = $('#js-email-exist-url').val();
-
-        // validate images type
-        if(!image.val()){
-            toastr.error("You must provide a passport image", "Error");
-            return
-        }
-        if(!name || !email || !phone){
-            toastr.warning("All input fields should not be blank", "Hey there!");
-            return
-        }else if(!(/^\+?[0-9]+$/.test(phone))){
-            toastr.warning("Invalid telephone format", "Hey there!");
-            return
-        }else if(phone.length <= 4){
-            toastr.warning("Invalid telephone length", "Hey there!");
-            return
-        }
+        let image_single_face_url = $('#js-image-singleface-url').val();
 
         try{
-            let response = $.ajax({
+            // check if image is uploaded
+            if(image.val()){
+                // make sure valid passport is uploaded and has a single face
+                let image_validate_response = await $.ajax({
+                    url: image_single_face_url,
+                    type: 'POST',
+                    data: {image: snapshot.val()},
+                    dataType: 'json',
+                });
+                if(!image_validate_response.status){
+                    toastr.error(
+                        image_validate_response.message,
+                        "Error"
+                    );
+                    return
+                }
+            }else{
+                toastr.error("You must provide a passport image", "Error");
+                return
+            }
+            if(!name || !email || !phone){
+                toastr.warning("All input fields should not be blank", "Hey there!");
+                return
+            }else if(!(/^\+?[0-9]+$/.test(phone))){
+                toastr.warning("Invalid telephone format", "Hey there!");
+                return
+            }else if(phone.length <= 4){
+                toastr.warning("Invalid telephone length", "Hey there!");
+                return
+            }
+
+            let email_validate_response = await $.ajax({
                 url: email_exist_url,
                 type: 'POST',
                 data: {email},
                 dataType: 'json',
             });
-            response.done((data)=>{
-                if(data.status){
-                    toastr.error("Email address already exist", "Error");
-                }else{
-                    this.submit()
-                }
-            });
-            response.fail(()=>{
-                toastr.error("An Unknown error occurred", "Error");
-            });
+            if(email_validate_response.status){
+                toastr.error(email_validate_response.message, "Error");
+                // return
+            }
+            // this.submit()
 
         }catch (e) {
             toastr.error(e.message, "Error");

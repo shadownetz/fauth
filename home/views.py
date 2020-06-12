@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from django.views import View
 from .forms import *
 import base64
+from .utils import get_file
 
 
 def index(request):
@@ -35,16 +36,6 @@ class Register(View):
         }
         return render(request, 'home/register.html', context)
 
-    @staticmethod
-    def get_file(dataURI, filename="temp"):
-        from django.core.files.base import ContentFile
-        from django.core.files import File
-
-        image_format, imgstr = dataURI.split(';base64,')
-        ext = image_format.split('/')[-1]
-        image = ContentFile(base64.b64decode(imgstr), name=filename+'.'+ext)
-        return File(image)
-
     def post(self, request):
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
@@ -52,9 +43,7 @@ class Register(View):
             if image:
                 user = register_form.save()
                 image_name = user.email.split("@")[0]
-                # FIXME: make sure only a single face exist in photo
-                # FIXME: create an API for this
-                UserImage.objects.create(user=user, image=self.get_file(image, image_name))
+                UserImage.objects.create(user=user, image=get_file(image, image_name))
                 request.session['register_success'] = True
                 return redirect(reverse('home:index'))
         return render(request, 'home/register.html', {'form': register_form})
