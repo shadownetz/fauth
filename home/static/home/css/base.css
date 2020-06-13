@@ -11,12 +11,10 @@ body{
     color: #ffffff;
 }
 
-/*  Preloader */
-@keyframes fauth_loading {
-    0%{ opacity: 0;left: 43%;}
-    40%{ opacity: 1; left: 45%;}
-    80%{opacity: 1; left: 49%}
-    100%{opacity: 0; left: 57%}
+/*  Rotating */
+@keyframes rotate {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(360deg)}
 }
 
 /* Glowing Divider */
@@ -50,14 +48,14 @@ body{
 }
 #preloader > .single-line{
     position: relative;
-    width: 70px;
-    height: 5px;
-    background-image: radial-gradient(rgba(152, 142, 212,.5), rgba(7,0,52,.5) );
     top: 70%;
-    left: 43%;
-    opacity: 0;
-    border-radius: 5px;
-    animation: fauth_loading 0.5s linear infinite 0s;
+    left: 48%;
+    width: 40px;
+    height: 40px;
+    border-top: 1px solid var(--fauth-highlight-color);
+    background-color: transparent;
+    border-radius: 50%;
+    animation: rotate .7s linear infinite 0s;
 }
 
 /* Buttons */

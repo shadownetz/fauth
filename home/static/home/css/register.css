@@ -24,9 +24,10 @@
     .register-box img{
         width: 100px;
         height:100px;
-        margin-left: 38%
+        margin-left: 30%
     }
     #auth-divider{
+        display: none;
         position: absolute;
         width: 100%;
         top: 49%;
@@ -122,10 +123,16 @@
     #fauth-auth{
         min-height: 100vh
     }
+    #auth-divider{
+        display: block
+    }
     .register-container{
         padding-top:3%;
     }
     .register-box{
         width: 30%
+    }
+    .register-box img{
+        margin-left: 38%
     }
 }
