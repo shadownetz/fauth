@@ -1,8 +1,8 @@
+from typing import final
 from django.shortcuts import render, redirect, reverse
 from django.views import View
 from .forms import *
-import base64
-from .utils import get_file
+from fauth.face import FauthImage
 
 
 def index(request):
@@ -29,8 +29,6 @@ class Register(View):
 
     def get(self, request):
         register_form = RegisterForm()
-        # image_form = UserImageForm()
-        # image_form = modelformset_factory(UserImage, UserImageForm, extra=4, max_num=4, validate_max=True)
         context = {
             'form': register_form,
         }
@@ -43,7 +41,9 @@ class Register(View):
             if image:
                 user = register_form.save()
                 image_name = user.email.split("@")[0]
-                UserImage.objects.create(user=user, image=get_file(image, image_name))
+                fauthImage: final = FauthImage(image, name=image_name)
+                image_file = fauthImage.get_file()
+                UserImage.objects.create(user=user, image=image_file)
                 request.session['register_success'] = True
                 return redirect(reverse('home:index'))
         return render(request, 'home/register.html', {'form': register_form})

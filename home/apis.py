@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from .models import User
-from .utils import get_face_encodings_from_base64
+from fauth.face import get_face_locations_from_base64
 
 
 def email_exist(request):
@@ -18,9 +18,9 @@ def validate_passport(request):
     data = {'status': False, 'message': "Bad Request"}
     if request.method == 'POST':
         b64_image = request.POST['image']
-        faces_encodings = get_face_encodings_from_base64(b64_image)
-        if len(faces_encodings) == 1:
+        faces = get_face_locations_from_base64(b64_image)
+        if len(faces) == 1:
             data['status'] = True
         else:
-            data['message'] = "Invalid passport image detected! Ensure only a single face appears in photo"
+            data['message'] = "Zero or Multiple face detected in passport!"
     return JsonResponse(data=data)

@@ -124,7 +124,7 @@ $(function(){
 
         try{
             // check if image is uploaded
-            if(image.val()){
+            if(snapshot.val()){
                 // make sure valid passport is uploaded and has a single face
                 let image_validate_response = await $.ajax({
                     url: image_single_face_url,
@@ -162,9 +162,9 @@ $(function(){
             });
             if(email_validate_response.status){
                 toastr.error(email_validate_response.message, "Error");
-                // return
+                return
             }
-            // this.submit()
+            this.submit()
 
         }catch (e) {
             toastr.error(e.message, "Error");
