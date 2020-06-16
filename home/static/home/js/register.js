@@ -115,7 +115,7 @@ $(function(){
     });
     $('#fauth-register-form').on('submit',async function register(event){
         event.preventDefault();
-        // let images = userImages;
+        let loader = loading('.register-box');
         let name = $('#id_name').val();
         let email = $('#id_email').val();
         let phone = $('#id_phone').val();
@@ -137,19 +137,24 @@ $(function(){
                         image_validate_response.message,
                         "Error"
                     );
+                    loader.hide();
                     return
                 }
             }else{
+                loader.hide();
                 toastr.error("You must provide a passport image", "Error");
                 return
             }
             if(!name || !email || !phone){
+                loader.hide();
                 toastr.warning("All input fields should not be blank", "Hey there!");
                 return
             }else if(!(/^\+?[0-9]+$/.test(phone))){
+                loader.hide();
                 toastr.warning("Invalid telephone format", "Hey there!");
                 return
             }else if(phone.length <= 4){
+                loader.hide();
                 toastr.warning("Invalid telephone length", "Hey there!");
                 return
             }
@@ -161,6 +166,7 @@ $(function(){
                 dataType: 'json',
             });
             if(email_validate_response.status){
+                loader.hide();
                 toastr.error(email_validate_response.message, "Error");
                 return
             }

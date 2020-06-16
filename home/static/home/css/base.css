@@ -1,7 +1,8 @@
 :root{
     --fauth-primary-color: #9e8ed4;
     --fauth-highlight-color: #007bff;
-    --fauth-accent-color: #070034
+    --fauth-accent-color: #070034;
+    --fauth-accent-trans-color: rgba(7, 0, 52, 0.7)
 }
 *{
     font-family: "Lucida Console", Courier, monospace;
@@ -46,7 +47,7 @@ body{
     background-size: 20%;
     z-index: 99999999;
 }
-#preloader > .single-line{
+#preloader > .wheel{
     position: relative;
     top: 70%;
     left: 48%;
@@ -76,6 +77,29 @@ input.form-control, input.form-control:focus{
     color: var(--fauth-primary-color)
 }
 
+/* loading overlay */
+#loading{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--fauth-accent-trans-color);
+    z-index: 2;
+}
+#loading > #wheel{
+    position: relative;
+    display: block;
+    top: 40%;
+    left:40%;
+    width: 70px;
+    height: 70px;
+    border-top: 2px solid var(--fauth-highlight-color);
+    border-left: 2px solid var(--fauth-highlight-color);
+    background-color: transparent;
+    border-radius: 50%;
+    animation: rotate .5s linear infinite 0s;
+}
 .hover:hover{
     cursor: pointer;
 }
