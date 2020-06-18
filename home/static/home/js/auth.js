@@ -118,7 +118,7 @@ $(function(){
 });
 try{
     let app = new Vue({
-        el: '#fauth-login',
+        el: '#fauth-auth',
         delimiters: ['[[', ']]'],
         data(){
             return {

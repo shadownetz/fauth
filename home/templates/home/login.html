@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
     <div class="container-fluid">
-        <div class="row" id="fauth-login">
+        <div class="row" id="fauth-auth">
             <div id="particles-js"></div>
             <div id="auth-divider"></div>
             <div class="col-12">
@@ -20,8 +20,11 @@
                                 <label data-toggle="tooltip"
                                        data-placement="left"
                                        title="Take a snapshot to continue"
-                                       class="cam">
+                                       class="cam"
+                                       id="webcam-snapshot"
+                                >
                                     <i class="fa fa-camera fa-2x"></i>
+                                    <input type="hidden" id="id_snapshot">
                                 </label>
                             </div>
                             <div class="row js-opt animate__animated animate__zoomIn hide">

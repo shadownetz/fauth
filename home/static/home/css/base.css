@@ -112,3 +112,50 @@ input.form-control, input.form-control:focus{
     border-radius: 50%;
     animation: rotate .5s linear infinite 0s;
 }
+/* WEBCAM */
+@media screen and (min-width: 320px){
+    /* Webcam Modal */
+    .webcam-content{
+        background-color: var(--fauth-accent-color)
+    }
+    .webcam-content .fauth-logo{
+        width: 50px;
+        height: 50px
+    }
+    .webcam-content button[class='close']{
+        color: var(--fauth-highlight-color)
+    }
+    .webcam-content .webcam-image-block{
+        height: 200px;
+        background-color: var(--fauth-highlight-color)
+    }
+    .webcam-content video{
+        position: absolute;
+        max-width: 100%;
+        width: auto!important;
+        height: auto!important;
+        top: 0;
+        left: 0
+    }
+    .webcam-header{
+        border-bottom-color: transparent;
+    }
+    .webcam-content .webcam-image-block .webcam-preview{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top:0;
+        left: 0
+    }
+    .webcam-footer{
+        border-top-color: transparent;
+    }
+    .webcam-footer > button{
+        border-radius: 40%;
+    }
+    .webcam-footer > button:nth-child(2),
+    .webcam-footer > button:nth-child(3)
+    {
+        display: none
+    }
+}
