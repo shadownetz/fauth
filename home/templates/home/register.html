@@ -35,8 +35,16 @@
                                             {{ form.snapshot }}
                                             <i class="fa fa-camera fa-2x"></i>
                                         </label>
-                                        <span id="switch-image-option" class="hover" data-toggle="tooltip" data-placement="right" title="toggle upload option">
+                                        <span id="switch-image-option" class="hover side" data-toggle="tooltip" data-placement="right" title="toggle upload option">
                                             <i class="fa fa-sync js-image-switch"></i>
+                                        </span>
+                                        <span class="hover side" data-toggle="tooltip"
+                                              data-placement="right"
+                                              title="passport image will be used as default login verification.
+                                                       This can be changed later in settings."
+                                              style="width: 20px;height:20px"
+                                        >
+                                            <i class="fa fa-question"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -65,39 +73,6 @@
                 </div>
             </div>
         </div>
-        <!-- Webcam Modal -->
-        <div class="modal fade" id="webCamModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content webcam-content">
-                    <div class="modal-header webcam-header">
-                        <img class="fauth-logo img-fluid" src="{% static 'home/images/logo/fauth_logo.png' %}" alt="fauth logo">
-                        <button type="button" class="close" id="webcam-close-btn" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-7 webcam-image-block text-left" id="webcam-camera">
-                                    <img class="webcam-preview" src="" alt="image preview">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer webcam-footer justify-content-center">
-                        <button type="button" class="btn" id="webcam-button">
-                            <i class="fa fa-circle-notch"></i>
-                        </button>
-                        <button id="webcam-button-next" type="button" class="btn" data-toggle="tooltip" data-placement="left" title="continue">
-                            <i class="fa fa-forward"></i>
-                        </button>
-                        <button id="webcam-button-retake" type="button" class="btn" data-toggle="tooltip" data-placement="right" title="retake">
-                            <i class="fa fa-sync-alt"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <input type="hidden" value="{% url 'home:api_email_exist' %}" id="js-email-exist-url">
     <input type="hidden" value="{% url 'home:api_image_single_face' %}" id="js-image-singleface-url">
@@ -110,7 +85,9 @@
     <script src="{% static 'home/vendors/particles/particles.min.js' %}"></script>
     <!-- Webcam JS -->
     <script src="{% static 'home/vendors/webcam/webcam.min.js' %}"></script>
+    <!-- Fauth custom webcam -->
+    <script src="{% static 'home/js/fauthWebCam.js' %}"></script>
     <!-- App script-->
     <script src="{% static 'home/js/util.js' %}"></script>
-    <script src="{% static 'home/js/register.js' %}"></script>
+    <script src="{% static 'home/js/auth.js' %}"></script>
 {% endblock %}

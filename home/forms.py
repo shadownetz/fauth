@@ -54,7 +54,7 @@ class RegisterForm(forms.ModelForm):
 #
 #     def save(self, commit=True):
 #         model = super(UserImageForm, self).save(commit=False)
-#         image = self.cleaned_data['image']    # load image from WebCam snapshot
+#         image = self.cleaned_data['image']    # load image from FauthWebCam snapshot
 #         if image:
 #             model.image = self.get_file(image)
 #         return super(UserImageForm, self).save(commit)

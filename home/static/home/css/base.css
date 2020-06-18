@@ -34,7 +34,18 @@ body{
     }
 }
 
-
+.hover:hover{
+    cursor: pointer;
+}
+.pd-t-10{
+    padding-top: 10px
+}
+.f-15{
+    font-size: 15px
+}
+.hide{
+    display: none!important;
+}
 
 /* Preloader */
 #preloader{
@@ -87,6 +98,7 @@ input.form-control, input.form-control:focus{
     background-color: var(--fauth-accent-trans-color);
     z-index: 2;
 }
+/* Element loading overlay */
 #loading > #wheel{
     position: relative;
     display: block;
@@ -99,7 +111,4 @@ input.form-control, input.form-control:focus{
     background-color: transparent;
     border-radius: 50%;
     animation: rotate .5s linear infinite 0s;
-}
-.hover:hover{
-    cursor: pointer;
 }

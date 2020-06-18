@@ -20,84 +20,17 @@ $(function(){
         image_labels.fadeToggle();
     });
 
-    let webCamModal = $('#webCamModal');
-    let webCamFrame = $('#webcam-camera');
-    /* WebCam Buttons */
-    let webCamSnap = $('#webcam-button');
-    let webCamRetake = $('#webcam-button-retake');
-    let webCamNext = $('#webcam-button-next');
-    /* preview element */
-    let webCamPreview = $('<img />', {
-        alt: 'image preview',
-        class: 'img-fluid webcam-preview'
-    });
     /* Image Value */
     let image = $('#id_image');
     let snapshot = $('#id_snapshot');
 
-    /* Load WebCam Modal */
-    $('#webcam-snapshot').click(function(event){
-        event.stopPropagation();
-        webCamModal.modal({
-            backdrop: 'static',
-            show: true
-        });
-        Webcam.set({
-            width: 350,
-            height: 200,
-            image_format: 'png',
-            jpeg_quality: 100,
-            flip_horiz: true,
-            fps: 60
-        });
-        attachWebCam();
+    // Initialize our WebCam
+    let newWebCam = new FauthWebCam({
+        launchBTN: '#webcam-snapshot',
+        outputID: '#id_snapshot',
+        bodyID: '#fauth-auth',
     });
-    /* WebCam Button Click */
-    webCamSnap.click(function(event){
-        event.stopPropagation();
-        Webcam.snap(function (dataURI) {
-            // load image data URI
-            snapshot.val(dataURI);
-            webCamPreview.attr('src', dataURI);
-        });
-        Webcam.reset();
-        webCamFrame.append(webCamPreview);
-        $(this).fadeOut();
-        addExtraWebCamButtons();
-    });
-    /* Retake Snapshot */
-    webCamRetake.click(function(event){
-        event.stopPropagation();
-        webCamSnap.fadeIn('slow');
-        attachWebCam();
-        removeExtraWebCamButtons();
-    });
-    /* Remove WebCam */
-    webCamNext.click(function(event){
-        event.stopPropagation();
-        destryoWebCam();
-    });
-    $('#webcam-close-btn').click(()=>{
-        destryoWebCam()
-    });
-
-    function attachWebCam(){
-        Webcam.attach('#webcam-camera');
-    }
-    function destryoWebCam(){
-        try{Webcam.reset()}catch (e) {}
-        webCamModal.modal('hide');
-        webCamSnap.fadeIn();
-        removeExtraWebCamButtons();
-    }
-    function removeExtraWebCamButtons(){
-        webCamNext.fadeOut();
-        webCamRetake.fadeOut();
-    }
-    function addExtraWebCamButtons(){
-        webCamNext.fadeIn("slow");
-        webCamRetake.fadeIn("slow");
-    }
+    newWebCam.initialize();
 
     /* Handle Registration */
     image.on('change', function(e){
@@ -176,5 +109,57 @@ $(function(){
             toastr.error(e.message, "Error");
         }
     });
+
+    /* Login */
+    $('#login-switch').on('click', function(event){
+        event.stopPropagation();
+        $('.js-opt').toggleClass('hide')
+    })
 });
+try{
+    let app = new Vue({
+        el: '#fauth-login',
+        delimiters: ['[[', ']]'],
+        data(){
+            return {
+                passcodes: ['', '', '', ''],
+                email: ''
+            }
+        },
+        methods: {
+            authInputs(event='', index=0){
+                let val = event.target.value;
+                for(let i in this.passcodes){
+                    if(Number.parseInt(i) === index){
+                        // in case of html hack
+                        if(val.length > 1){
+                            this.passcodes[index] = val.substr((0-val.length)+1, 1);
+                            break
+                        }else{
+                            this.passcodes[index] = val;
+                            break
+                        }
+                    }
+                }
+                // move to next focus
+                if(((index+1) < 4 || (index+1) === 4) && val){
+                    this.$refs['focus-'+(index+1)].focus();
+                }
+            },
+            validateEmail(mail){
+                return !!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)
+            },
+            login(){
+                if(!this.validateEmail(this.email)){
+                    toastr.error("Invalid email address", "Error!")
+                }
+            }
+        },
+        created(){
+            console.log("Vue.JS initalized!")
+        }
+    });
+}catch (e) {
+    //
+}
 

@@ -62,7 +62,7 @@
         color: var(--fauth-accent-color);
         border: 0
     }
-    #switch-image-option{
+    .side{
         display: inline-block;
         width: 30px
     }

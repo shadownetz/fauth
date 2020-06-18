@@ -6,30 +6,64 @@
 {% endblock %}
 {% block content %}
     <div class="container-fluid">
-        <div class="row" id="fauth-auth">
+        <div class="row" id="fauth-login">
             <div id="particles-js"></div>
             <div id="auth-divider"></div>
             <div class="col-12">
-                <div class="row justify-content-center login-container">
-                    <div class="login-box">
-                        <a href="{% url 'home:index' %}">
-                            <img class="fauth-logo img-fluid" src="{% static 'home/images/logo/fauth_logo.png' %}" alt="fauth logo">
-                        </a>
-                        <p class="text text-info text-center">
-                            Take a live snapshot or upload valid image to continue
-                        </p>
-
-                        <div class="login-options">
-                            <label>
-                                <i class="fa fa-camera fa-2x"></i>
-                            </label>
-                            <label for="js-upload">
-                                <input type="file" accept="*/image" id="js-upload">
-                                <i class="fa fa-file-upload fa-2x"></i>
-                            </label>
+                <form id="fauth-login-form" method="post" role="form" @submit.prevent="login">
+                    <div class="row justify-content-center login-container">
+                        <div class="login-box">
+                            <a href="{% url 'home:index' %}">
+                                <img class="fauth-logo img-fluid" src="{% static 'home/images/logo/fauth_logo.png' %}" alt="fauth logo">
+                            </a>
+                            <div class="form-group js-opt login-options animate__animated animate__zoomIn">
+                                <label data-toggle="tooltip"
+                                       data-placement="left"
+                                       title="Take a snapshot to continue"
+                                       class="cam">
+                                    <i class="fa fa-camera fa-2x"></i>
+                                </label>
+                            </div>
+                            <div class="row js-opt animate__animated animate__zoomIn hide">
+                                <div class="col-lg-4 col-md-12 form-group">
+                                    <label for="f-email" class="pd-t-10 f-15">
+                                        <i class="fa fa-envelope"></i> Email
+                                    </label>
+                                </div>
+                                <div class="col-lg-8 col-md-12 form-group">
+                                    <input class="form-control" type="email" id="f-email" name="email" placeholder="email address" v-model="email">
+                                </div>
+                                <div class="col-lg-4 col-md-12 form-group">
+                                    <label class="pd-t-10 f-15">
+                                        <i class="fa fa-lock-open"></i> Password
+                                    </label>
+                                </div>
+                                <div class="col-lg-8 col-md-12 form-group">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <input class="form-control code-box" type="password" @input="authInputs($event, 0)" ref="focus-0" maxlength="1" placeholder="*">
+                                            <input class="form-control code-box" type="password" @input="authInputs($event, 1)" ref="focus-1" maxlength="1" placeholder="*">
+                                            <input class="form-control code-box" type="password" @input="authInputs($event, 2)" ref="focus-2" maxlength="1" placeholder="*">
+                                            <input class="form-control code-box" type="password" @input="authInputs($event, 3)" ref="focus-3" maxlength="1" placeholder="*">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 form-group text-center">
+                                <span class="text text-warning f-15 hover" id="login-switch">
+                                    choose alternate login method
+                                    <i class="fa fa-hand-pointer"></i>
+                                </span>
+                            </div>
+                            <div class="col-5 offset-lg-4 form-group">
+                                <button type="submit" class="btn" ref="focus-4">
+                                    <i class="fa fa-globe"></i> Login
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
+
             </div>
 
         </div>
@@ -38,8 +72,15 @@
 {% endblock %}
 
 {% block script %}
+    <!-- Vue Plugin -->
+    <!-- FIXME: change to vue production file -->
+    <script src="{% static 'home/vendors/vue/vue.js' %}"></script>
     <!-- Particle JS-->
     <script src="{% static 'home/vendors/particles/particles.min.js' %}"></script>
+    <!-- Webcam JS -->
+    <script src="{% static 'home/vendors/webcam/webcam.min.js' %}"></script>
+    <!-- Fauth custom webcam -->
+    <script src="{% static 'home/js/fauthWebCam.js' %}"></script>
     <!-- App script-->
-    <script src="{% static 'home/js/register.js' %}"></script>
+    <script src="{% static 'home/js/auth.js' %}"></script>
 {% endblock %}
