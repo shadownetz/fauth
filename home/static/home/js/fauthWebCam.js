@@ -10,6 +10,9 @@ class FauthWebCam {
         this.image_format = format;
         this.outputElement = $(outputID);
         this.bodyID = $(bodyID);
+        this.launchBTN = launchBTN
+    }
+    initialize(){
         this.bodyID.append(`
         <div class="modal fade" id="webCamModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -50,13 +53,11 @@ class FauthWebCam {
         this.webCamNext = $('#webcam-button-next');
         this.webCamRetake = $('#webcam-button-retake');
         this.webCamCloseBtn = $('#webcam-close-btn');
-        this.webCamLaunchBtn = $(launchBTN);
+        this.webCamLaunchBtn = $(this.launchBTN);
         this.webCamPreview = $('<img />', {
             alt: 'image preview',
             class: 'img-fluid webcam-preview'
         });
-    }
-    initialize(){
         Webcam.set({
             width: 350,
             height: 200,
