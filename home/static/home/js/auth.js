@@ -111,55 +111,74 @@ $(function(){
     });
 
     /* Login */
-    $('#login-switch').on('click', function(event){
-        event.stopPropagation();
-        $('.js-opt').toggleClass('hide')
-    })
-});
-try{
-    let app = new Vue({
-        el: '#fauth-auth',
-        delimiters: ['[[', ']]'],
-        data(){
-            return {
-                passcodes: ['', '', '', ''],
-                email: ''
-            }
-        },
-        methods: {
-            authInputs(event='', index=0){
-                let val = event.target.value;
-                for(let i in this.passcodes){
-                    if(Number.parseInt(i) === index){
-                        // in case of html hack
-                        if(val.length > 1){
-                            this.passcodes[index] = val.substr((0-val.length)+1, 1);
-                            break
-                        }else{
-                            this.passcodes[index] = val;
-                            break
+    try{
+        let app = new Vue({
+            el: '#fauth-auth',
+            delimiters: ['[[', ']]'],
+            data(){
+                return {
+                    passcodes: ['', '', '', ''],
+                    email: '',
+                    face_auth_login_mode: true
+                }
+            },
+            watch:{
+                face_auth_login_mode(newval){
+                    if(!newval){
+                        setTimeout(()=>{
+                            toastr.warning('This method only works if enabled in settings', 'Notice!')
+                        }, 500)
+                    }
+                    $('.js-opt').toggleClass('hide')
+
+                }
+            },
+            methods: {
+                authInputs(event='', index=0){
+                    let val = event.target.value;
+                    for(let i in this.passcodes){
+                        if(Number.parseInt(i) === index){
+                            // in case of html hack
+                            if(val.length > 1){
+                                this.passcodes[index] = val.substr((0-val.length)+1, 1);
+                                break
+                            }else{
+                                this.passcodes[index] = val;
+                                break
+                            }
                         }
                     }
-                }
-                // move to next focus
-                if(((index+1) < 4 || (index+1) === 4) && val){
-                    this.$refs['focus-'+(index+1)].focus();
+                    // move to next focus
+                    if(((index+1) < 4 || (index+1) === 4) && val){
+                        this.$refs['focus-'+(index+1)].focus();
+                    }
+                },
+                validateEmail(mail){
+                    return !!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)
+                },
+                login(){
+                    if(this.face_auth_login_mode){
+                        let b64Image = $('#id_snapshot').val();
+                        if(!b64Image){
+                            toastr.error("Take a passport snapshot to login", "Error!")
+                        }else{
+
+                        }
+                    }else{
+                        if(!this.validateEmail(this.email)){
+                            toastr.error("Invalid email address", "Error!")
+                        }
+
+                    }
+
                 }
             },
-            validateEmail(mail){
-                return !!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)
-            },
-            login(){
-                if(!this.validateEmail(this.email)){
-                    toastr.error("Invalid email address", "Error!")
-                }
+            created(){
+                console.log("Vue.JS initalized!")
             }
-        },
-        created(){
-            console.log("Vue.JS initalized!")
-        }
-    });
-}catch (e) {
-    //
-}
+        });
+    }catch (e) {
+    }
+});
+
 
