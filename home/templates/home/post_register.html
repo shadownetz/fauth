@@ -1,0 +1,44 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %}| Confirmation{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'home/css/login.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row" id="fauth-auth">
+            <div id="particles-js"></div>
+            <div id="auth-divider"></div>
+            <div class="col-12">
+                <div class="row justify-content-center login-container">
+                    <div class="login-box">
+                        <a href="{% url 'home:index' %}">
+                            <img class="fauth-logo img-fluid" src="{% static 'home/images/logo/fauth_logo.png' %}" alt="fauth logo">
+                        </a>
+                        <div class="row justify-content-center">
+                            <div class="col-9 text-center" style="padding: 20px">
+                                <p class="text-primary">
+                                    Howdy <code><b>{{ user.name }}</b></code><br>
+                                </p>
+                                <p class="text text-warning">
+                                    your signup request has been sent and will be processed shortly.
+                                </p>
+                                <a href="{% url 'home:login' %}" class="btn btn-success">
+                                    <i class="fa fa-door-open"></i> Proceed to login
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="particles-json-url" value="{% static 'home/vendors/particles/particles-nasa.json' %}">
+{% endblock %}
+
+{% block script %}
+    <!-- Particle JS-->
+    <script src="{% static 'home/vendors/particles/particles.min.js' %}"></script>
+    <!-- App script-->
+    <script src="{% static 'home/js/index.js' %}"></script>
+{% endblock %}
