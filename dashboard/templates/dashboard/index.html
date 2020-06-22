@@ -1,10 +1,71 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>FAUTH App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon-->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'home/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'home/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'home/favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'home/favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'home/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Animate Css-->
+    <link rel="stylesheet" href="{% static 'home/vendors/animate/animate.min.css' %}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'home/vendors/fontawesome/css/all.min.css' %}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'home/vendors/bootstrap/css/bootstrap-reboot.css' %}">
+    <link rel="stylesheet" href="{% static 'home/vendors/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'home/vendors/bootstrap/css/bootstrap-grid.min.css' %}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{% static 'home/vendors/toastr/toastr.min.css' %}">
+    <!-- App Styles-->
+    <link rel="stylesheet" href="{% static 'dashboard/css/index.css' %}">
 </head>
 <body>
-    <h1>Welcome {{ request.user.name }}</h1>
+<div id="preloader">
+    <div class="wheel"></div>
+</div>
+<div class="container-fluid" id="fauth-app">
+    <div class="row">
+        <div id="particles-js"></div>
+        <!-- Components will be auto-injected -->
+{#        <router-view/>#}
+    </div>
+</div>
+<input type="hidden" id="particles-json-url" value="{% static 'dashboard/particles/particles-nasa.json' %}">
+
+
+
+<script src="{% static 'home/vendors/jquery/jquery-3.5.1.min.js' %}"></script>
+<!-- Bootstrap Script-->
+<script src="{% static 'home/vendors/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'home/vendors/bootstrap/js/bootstrap.bundle.js' %}"></script>
+<!-- FontAwesome Js-->
+<script src="{% static 'home/vendors/fontawesome/js/all.min.js' %}"></script>
+<!--Toastr -->
+<script src="{% static 'home/vendors/toastr/toastr.min.js' %}"></script>
+<!-- Vue Plugins -->
+<!-- FIXME: change to vue production file -->
+<script src="{% static 'home/vendors/vue/vue.js' %}"></script>
+<script src="{% static 'home/vendors/vue/vue-router.js' %}"></script>
+<!-- Particle JS-->
+<script src="{% static 'home/vendors/particles/particles.min.js' %}"></script>
+<!-- Webcam JS -->
+<script src="{% static 'home/vendors/webcam/webcam.min.js' %}"></script>
+<!-- Fauth custom webcam -->
+<script src="{% static 'home/js/fauthWebCam.js' %}"></script>
+<!-- App script-->
+<script src="{% static 'dashboard/js/util.js' %}"></script>
+<!-- router templates -->
+<script src="{% static 'dashboard/router-templates/dashboard.js' %}"></script>
+<!-- End of router templates -->
+<script src="{% static 'dashboard/js/router.js' %}"></script>
+<script src="{% static 'dashboard/js/app.js' %}"></script>
+<!-- End of App script -->
 </body>
 </html>
