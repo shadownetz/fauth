@@ -6,11 +6,11 @@ from .models import User, Candidate, UserImage, CandidateImage
 class Admin(UserAdmin):
     model = User
     list_display = (
-        'id', 'email', 'name', 'phone', 'is_superuser', 'is_active', 'is_staff', 'date_created', 'last_login'
+        'id', 'email', 'name', 'phone', 'password', 'is_superuser', 'is_active', 'is_staff', 'date_created', 'last_login'
     )
     list_filter = ('email', 'is_active', 'is_staff', 'date_created', 'last_login')
     fieldsets = (
-        (None, {'fields': ('email', 'name', 'phone')}),
+        (None, {'fields': ('email', 'name', 'phone', 'password')}),
         ('Permissions', {'fields': ('is_active', 'is_superuser', 'is_staff')}),
     )
     add_fieldsets = (

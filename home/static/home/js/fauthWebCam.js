@@ -10,7 +10,8 @@ class FauthWebCam {
         this.image_format = format;
         this.outputElement = $(outputID);
         this.bodyID = $(bodyID);
-        this.launchBTN = launchBTN
+        this.launchBTN = launchBTN;
+        this.snapshotValue = '';
     }
     initialize(){
         this.bodyID.append(`
@@ -94,7 +95,9 @@ class FauthWebCam {
             // load image data URI
             this.webCamPreview.attr('src', dataURI);
             // attach value to specified element identifier
-            this.outputElement.val(dataURI)
+            this.outputElement.val(dataURI);
+            // assign value to class data for verification
+            this.snapshotValue = dataURI
         });
         Webcam.reset();
         $(this.webCamFrame).append(this.webCamPreview);

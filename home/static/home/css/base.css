@@ -71,12 +71,12 @@ body{
 }
 
 /* Buttons */
-button.btn{
+button.btn, a.btn{
     background: transparent;
     color: var(--fauth-primary-color);
     border-color: var(--fauth-highlight-color)
 }
-button.btn:hover{
+button.btn:hover, a.btn:hover{
     background: var(--fauth-primary-color);
     color: var(--fauth-accent-color);
     border: 0

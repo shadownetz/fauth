@@ -1,28 +1,61 @@
 from typing import final
 from django.shortcuts import render, redirect, reverse
+from django.contrib.auth import login, authenticate
 from django.views import View
 from .forms import *
 from fauth.face import FauthImage
+from .utils import compare_user_faces_from_db
 
 
 def index(request):
-    context = {}
+    return render(request, 'home/index.html', {})
+
+
+def sign_in(request):
+    errors = []
+    if request.method == 'POST':
+        face_auth = request.POST['face_auth_login']
+        next_url = request.POST['next']
+        if face_auth == 'true':
+            image = request.POST['snapshot']
+            user = compare_user_faces_from_db(image)
+            # user is found
+            if not user['err_message']:
+                user = User.objects.get(email=user['email'])
+                if user.is_active:
+                    login(request, user)
+                    if next_url:
+                        return redirect(next_url)
+                    return redirect(reverse('home:dashboard:index'))
+                errors.append('Your request is still in processing!')
+            # user is not found
+            elif not user['err_message'] and not user['email']:
+                errors.append('Access Denied!')
+            # passport upload error
+            else:
+                errors.append(user['err_message'])
+        else:
+            email = request.POST['email']
+            password = request.POST['password']
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                if next_url:
+                    return redirect(next_url)
+                return redirect(reverse('home:dashboard:index'))
+            errors.append('Invalid credentials!')
+    return render(request, 'home/login.html', {'errors': errors})
+
+
+def post_registration(request):
     try:
-        if request.session['register_success'] is True:
-            context['register_success'] = True
-            del request.session['register_success']
+        user_id = request.session['user_id']
+        user = User.objects.get(pk=user_id)
+        del request.session['user_id']
+        return render(request, 'home/post_register.html', {'user': user})
     except KeyError:
         pass
-    return render(request, 'home/index.html', context)
-
-
-class Login(View):
-
-    def get(self, request):
-        return render(request, 'home/login.html', {})
-
-    def post(self, request):
-        return
+    return redirect(reverse('home:login'))
 
 
 class Register(View):
@@ -44,6 +77,6 @@ class Register(View):
                 fauthImage: final = FauthImage(image, name=image_name)
                 image_file = fauthImage.get_file()
                 UserImage.objects.create(user=user, image=image_file)
-                request.session['register_success'] = True
-                return redirect(reverse('home:index'))
+                request.session['user_id'] = user.id
+                return redirect(reverse('home:post_register'))
         return render(request, 'home/register.html', {'form': register_form})

@@ -73,6 +73,38 @@
     .login-box input[type='password']:not(:last-of-type){
         margin-right: 2%;
     }
+    .error-box{
+        position: absolute;
+        top: 0;
+        left:0;
+        width: 100%
+    }
+    .error-box .err-close{
+        position: absolute;
+        display: inline-block;
+        right: 5px;
+        top: 0;
+        font-size: 15px;
+        width: 10px;
+        height: 10px;
+        text-transform: lowercase;
+    }
+    .error-box .error-body{
+        padding-top: 20px
+    }
+    .error-box .error-content{
+        position: relative;
+        /*left: 42%;*/
+        /*top: 5%;*/
+        background-color: transparent;
+        border: 2px dotted var(--danger);
+        border-radius: 5px;
+        padding: 20px;
+        color: var(--danger);
+        font-weight: bold;
+        text-transform: capitalize;
+        margin: 0 5px
+    }
 }
 
 @media screen and (min-width: 768px){

@@ -10,7 +10,19 @@
             <div id="particles-js"></div>
             <div id="auth-divider"></div>
             <div class="col-12">
-                <form id="fauth-login-form" method="post" role="form" @submit.prevent="login">
+                <div class="error-box">
+                    <div class="container-fluid">
+                        <div class="row justify-content-center error-body">
+                            {% for error in errors %}
+                                <div class="error-content">
+                                    <span class="err-close hover">x</span>
+                                    <h4>{{ error }}</h4>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <form id="fauth-login-form" method="post" ref="fauth-login" role="form" @submit.prevent="login">
                     <div class="row justify-content-center login-container">
                         <div class="login-box">
                             <a href="{% url 'home:index' %}">
@@ -24,7 +36,7 @@
                                        id="webcam-snapshot"
                                 >
                                     <i class="fa fa-camera fa-2x"></i>
-                                    <input type="hidden" id="id_snapshot">
+                                    <input type="hidden" id="id_snapshot" name="snapshot">
                                 </label>
                             </div>
                             <div class="row js-opt animate__animated animate__zoomIn hide">
@@ -54,11 +66,16 @@
                             </div>
                             <div class="col-12 form-group text-center">
                                 <span class="text text-warning f-15 hover" id="login-switch" @click="face_auth_login_mode = !face_auth_login_mode">
+                                    <i class="fa fa-caret-right"></i><i class="fa fa-caret-right"></i>
                                     choose alternate login method
-                                    <i class="fa fa-hand-pointer"></i>
+                                    <i class="fa fa-caret-left"></i><i class="fa fa-caret-left"></i>
                                 </span>
+                                {% csrf_token %}
+                                <input type="hidden" name="face_auth_login" :value="face_auth_login_mode">
+                                <input type="hidden" name="next" value="{{ request.GET.next }}">
+                                <input type="hidden" :value="passcodes.join('')" name="password">
                             </div>
-                            <div class="col-5 offset-lg-4 form-group">
+                            <div class="col-12 text-center form-group">
                                 <button type="submit" class="btn" ref="focus-4">
                                     <i class="fa fa-globe"></i> Login
                                 </button>

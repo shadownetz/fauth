@@ -37,3 +37,18 @@ def get_face_locations_from_base64(base64String: str) -> list:
     return face_locations
 
 
+def compare_faces(image1, image2) -> dict:
+    first_image = face_recognition.load_image_file(image1)
+    first_image_encodings = face_recognition.face_encodings(first_image)
+    second_image = face_recognition.load_image_file(image2)
+    second_image_encodings = face_recognition.face_encodings(second_image)
+    # No face found in unknown image
+    if second_image_encodings and first_image_encodings:
+        return {
+            'result': face_recognition.compare_faces([first_image_encodings[0]], second_image_encodings[0]),
+            'message': ''
+        }
+    return {
+        'result': [],
+        'message': 'No face detected!'
+    }

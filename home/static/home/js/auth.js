@@ -1,3 +1,4 @@
+let newWebCam;
 $(function(){
     /* remove preloader*/
     $('#preloader').fadeOut();
@@ -6,11 +7,6 @@ $(function(){
     const particles_url = $('#particles-json-url').val();
     particlesJS.load('particles-js', particles_url, function() {
         console.info('particles.js config loaded');
-    });
-
-    /* Initialize tooltips */
-    $('[data-toggle="tooltip"]').tooltip({
-        container: 'body',
     });
 
     /* Image Toggle Switch */
@@ -25,12 +21,17 @@ $(function(){
     let snapshot = $('#id_snapshot');
 
     // Initialize our WebCam
-    let newWebCam = new FauthWebCam({
+    newWebCam = new FauthWebCam({
         launchBTN: '#webcam-snapshot',
         outputID: '#id_snapshot',
         bodyID: '#fauth-auth',
     });
     newWebCam.initialize();
+
+    /* Initialize tooltips */
+    $('[data-toggle="tooltip"]').tooltip({
+        container: 'body',
+    });
 
     /* Handle Registration */
     image.on('change', function(e){
@@ -110,75 +111,89 @@ $(function(){
         }
     });
 
-    /* Login */
-    try{
-        let app = new Vue({
-            el: '#fauth-auth',
-            delimiters: ['[[', ']]'],
-            data(){
-                return {
-                    passcodes: ['', '', '', ''],
-                    email: '',
-                    face_auth_login_mode: true
-                }
-            },
-            watch:{
-                face_auth_login_mode(newval){
-                    if(!newval){
-                        setTimeout(()=>{
-                            toastr.warning('This method only works if enabled in settings', 'Notice!')
-                        }, 500)
-                    }
-                    $('.js-opt').toggleClass('hide')
-
-                }
-            },
-            methods: {
-                authInputs(event='', index=0){
-                    let val = event.target.value;
-                    for(let i in this.passcodes){
-                        if(Number.parseInt(i) === index){
-                            // in case of html hack
-                            if(val.length > 1){
-                                this.passcodes[index] = val.substr((0-val.length)+1, 1);
-                                break
-                            }else{
-                                this.passcodes[index] = val;
-                                break
-                            }
-                        }
-                    }
-                    // move to next focus
-                    if(((index+1) < 4 || (index+1) === 4) && val){
-                        this.$refs['focus-'+(index+1)].focus();
-                    }
-                },
-                validateEmail(mail){
-                    return !!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)
-                },
-                login(){
-                    if(this.face_auth_login_mode){
-                        let b64Image = $('#id_snapshot').val();
-                        if(!b64Image){
-                            toastr.error("Take a passport snapshot to login", "Error!")
-                        }else{
-
-                        }
-                    }else{
-                        if(!this.validateEmail(this.email)){
-                            toastr.error("Invalid email address", "Error!")
-                        }
-
-                    }
-
-                }
-            },
-            created(){
-                console.log("Vue.JS initalized!")
-            }
-        });
-    }catch (e) {
-    }
+    /* close login error box */
+    $('.error-box .error-content .err-close').on('click', function(event){
+        event.preventDefault();
+        $(this).parent().fadeOut('slow').remove()
+    });
 });
+
+/* Login */
+try{
+    let app = new Vue({
+        el: '#fauth-auth',
+        delimiters: ['[[', ']]'],
+        data(){
+            return {
+                passcodes: ['', '', '', ''],
+                email: '',
+                face_auth_login_mode: true
+            }
+        },
+        watch:{
+            face_auth_login_mode(newval){
+                if(!newval){
+                    setTimeout(()=>{
+                        toastr.warning('This method only works if enabled in settings', 'Important info!')
+                    }, 500)
+                }
+                $('.js-opt').toggleClass('hide')
+
+            }
+        },
+        methods: {
+            authInputs(event='', index=0){
+                let val = event.target.value;
+                for(let i in this.passcodes){
+                    if(Number.parseInt(i) === index){
+                        // in case of html hack
+                        if(val.length > 1){
+                            this.passcodes[index] = val.substr((0-val.length)+1, 1);
+                            break
+                        }else{
+                            this.passcodes[index] = val;
+                            break
+                        }
+                    }
+                }
+                // move to next focus
+                if(((index+1) < 4 || (index+1) === 4) && val){
+                    this.$refs['focus-'+(index+1)].focus();
+                }
+            },
+            validateEmail(mail){
+                return !!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)
+            },
+            login(){
+                if(this.face_auth_login_mode){
+                    let b64Image = $('#id_snapshot').val();
+                    if(!b64Image){
+                        toastr.error("Take a passport snapshot to login", "Error!");
+                        return
+                    }
+                    if(newWebCam.snapshotValue !== b64Image){
+                        toastr.error("We know what you did, kindly be a good user and do the right thing", "Error!");
+                        return
+                    }
+                }else{
+                    if(!this.validateEmail(this.email)){
+                        toastr.error("Invalid email address", "Error!");
+                        return;
+                    }
+                    let passcode_ver = this.passcodes.filter(value=>!!value);
+                    if(passcode_ver.length < 4){
+                        toastr.error("Complete the password fields", "Error!");
+                        return;
+                    }
+                }
+                this.$refs['fauth-login'].submit()
+            }
+        },
+        created(){
+            console.log("Vue.JS initalized!")
+        }
+    });
+}catch (e) {
+}
 
 
