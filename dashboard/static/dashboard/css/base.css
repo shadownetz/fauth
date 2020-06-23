@@ -2,7 +2,9 @@
     --fauth-primary-color: #9e8ed4;
     --fauth-highlight-color: #007bff;
     --fauth-accent-color: #070034;
-    --fauth-accent-trans-color: rgba(7, 0, 52, 0.7)
+    --fauth-accent-trans-color: rgba(7, 0, 52, 0.7);
+    --fauth-accent-dark-color: #040022;
+    --fauth-accent-dark-trans-color: rgba(4, 0, 34, 0.52)
 }
 *{
     font-family: "Lucida Console", Courier, monospace;
