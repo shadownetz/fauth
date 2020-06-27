@@ -3,6 +3,8 @@
     --fauth-highlight-color: #007bff;
     --fauth-accent-color: #070034;
     --fauth-accent-trans-color: rgba(7, 0, 52, 0.7)
+    /* FIXME: add gradients for highlights  */
+
 }
 *{
     font-family: "Lucida Console", Courier, monospace;

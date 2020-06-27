@@ -39,7 +39,8 @@
              @mousedown="screen_lock_settings.pressed=true"
              @mouseup="screen_lock_settings.pressed=false"
              @mousemove="mouse_move_on_locker_screen($event)"
-             :style="{height: this.screen_lock_settings.new_height+'px'}">
+             :style="{height: this.screen_lock_settings.new_height+'px'}"
+        >
             <div class="container-fluid">
                 <div class="row">
                     <div id="app-locker-btn" @click="toggleScreenHeight">
@@ -49,26 +50,101 @@
                 </div>
             </div>
         </div>
+        <div class="container-fluid">
+            <div class="row">
+                <header id="app-header">
+                    <div class="app-logo float-left">
+                        <a href="{% url 'home:dashboard:index' %}">
+                            <img class="img-fluid" src="{% static 'home/images/logo/fauth_logo.png' %}" alt="FAUTH Logo">
+                        </a>
+                    </div>
+                    <div class="float-right dropleft">
+                        <button class="app-control-panel dropdown-toggle"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                        >
+                            <i class="fa fa-cogs"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <h6 class="dropdown-header">fauth settings</h6>
+                            <a class="dropdown-item" href="#">settings</a>
+                            <a class="dropdown-item" href="#">logout</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item disabled descrip" href="#">
+                                <small>FAUTH V1.0</small>
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="col-7 col-md-10 col-lg-10 offset-3 offset-md-1 offset-lg-1 app-log-status text-center">
+
+                    </div>
+                </header>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-1" >
+                    <div id="app-navigation">
+                        <div class="text-center app-nav-box">
+                            <div @click="hideNav()">
+                                <a href="#"><i class="fa fa-bars"></i></a>
+                            </div>
+                            <div>
+                                <a href="#"><i class="fa fa-cubes"></i> </a>
+                                <span class="app-tooltip" :style="{'marginTop': '49px'}">verify candidate</span>
+                            </div>
+                            <div>
+                                <a href="#"><i class="fa fa-user-astronaut"></i> </a>
+                                <span class="app-tooltip" :style="{'marginTop': 49*2+'px'}">add candidate</span>
+                            </div>
+                            <div>
+                                <a href="#"><i class="fa fa-user-friends"></i> </a>
+                                <span class="app-tooltip" :style="{'marginTop': 49*3+'px'}">view candidate</span>
+                            </div>
+                            <div>
+                                <a href="#"><i class="fa fa-user-cog"></i> </a>
+                                <span class="app-tooltip" :style="{'marginTop': 49*4+'px'}">profile</span>
+                            </div>
+                            <div>
+                                <a href="#"><i class="fa fa-user-ninja"></i> </a>
+                                <span class="app-tooltip" :style="{'marginTop': 49*5+'px'}">view admins</span>
+                            </div>
+                            <div>
+                                <a href="#"><i class="fa fa-database"></i> </a>
+                                <span class="app-tooltip" :style="{'marginTop': 49*6+'px'}">view logs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="app-body" class="col-12 col-lg-11"></div>
+            </div>
+        </div>
         <!-- Components will be auto-injected -->
         {#        <router-view/>#}
     </div>
 </div>
-<input type="hidden" id="particles-json-url" value="{% static 'dashboard/particles/particles-nasa.json' %}">
+<input type="hidden" id="particles-json-url" value="{% static 'dashboard/vendors/particles/particles-nasa.json' %}">
 <input type="hidden" :value="screen_height">
 
 
 <script src="{% static 'home/vendors/jquery/jquery-3.5.1.min.js' %}"></script>
-<!-- Bootstrap Script-->
-<script src="{% static 'home/vendors/bootstrap/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'home/vendors/bootstrap/js/bootstrap.bundle.js' %}"></script>
-<!-- FontAwesome Js-->
-<script src="{% static 'home/vendors/fontawesome/js/all.min.js' %}"></script>
-<!--Toastr -->
-<script src="{% static 'home/vendors/toastr/toastr.min.js' %}"></script>
 <!-- Vue Plugins -->
 <!-- FIXME: change to vue production file -->
 <script src="{% static 'home/vendors/vue/vue.js' %}"></script>
 <script src="{% static 'home/vendors/vue/vue-router.js' %}"></script>
+<!-- Bootstrap Script-->
+<script src="{% static 'home/vendors/bootstrap/js/bootstrap.bundle.js' %}"></script>
+<script src="{% static 'home/vendors/bootstrap/js/bootstrap.js' %}"></script>
+
+<!-- FontAwesome Js-->
+<script src="{% static 'home/vendors/fontawesome/js/all.min.js' %}"></script>
+<!--Toastr -->
+<script src="{% static 'home/vendors/toastr/toastr.min.js' %}"></script>
+
 <!-- Particle JS-->
 <script src="{% static 'home/vendors/particles/particles.min.js' %}"></script>
 <!-- Webcam JS -->

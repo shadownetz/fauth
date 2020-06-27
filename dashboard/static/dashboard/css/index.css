@@ -6,11 +6,21 @@
     height: 100%;
     top:0;
     left:0;
-    z-index: 0
+    z-index: -1
 }
 
 
 @media screen and (min-width: 320px){
+    #fauth-app::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,.4);
+        z-index: -1
+    }
     #app-locker-screen{
         position: absolute;
         top: 0;
@@ -21,6 +31,9 @@
         border-bottom: 1px solid var(--fauth-highlight-color);
         z-index: 999;
         /*transition: all .3s linear*/
+    }
+    #app-locker-screen:hover{
+        cursor: pointer;
     }
     #app-locker-screen  #app-locker-btn{
         position: absolute;
@@ -35,20 +48,150 @@
         text-align: center;
         transition: all .3s linear;
     }
+    #app-locker-screen  #app-locker-btn::before{
+        content: '';
+        position: absolute;
+        top: 5%;
+        left: 4%;
+        height: 90%;
+        width: 90%;
+        border: 2px dotted var(--fauth-accent-color);
+        border-radius: 50%;
+    }
     #app-locker-screen  #app-locker-btn:hover{
         cursor: pointer;
         border: 1px solid var(--fauth-highlight-color);
         background-color: var(--fauth-accent-color);
         color: var(--fauth-primary-color)
     }
+    #app-header{
+        z-index: 1;
+        padding: 31px 10px 0px 10px;
+        width: 100%;
+    }
+    #app-header > .app-logo img{
+        width: 80px;
+        height: 80px
+    }
+    #app-header .app-control-panel{
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--fauth-highlight-color);
+        border-top: 0;
+        border-radius: 0 0 10px 10px;
+        background-color: var(--fauth-accent-dark-color);
+        padding: 10px 5px;
+        transition: all .3s linear;
+        color: #ffffff;
+    }
+    #app-header .app-control-panel:active{
+        border: 0
+    }
+    #app-header .app-control-panel + .dropdown-menu{
+        background-color: var(--fauth-accent-color);
+        box-shadow: 1px 1px 2px var(--fauth-accent-dark-color),
+        -1px -1px 2px var(--fauth-accent-dark-color);
+    }
+    #app-header .app-control-panel + .dropdown-menu a{
+        color: #ffffff;
+        transition: all .3s linear
+    }
+    #app-header .app-control-panel + .dropdown-menu .dropdown-divider{
+        border-color: var(--fauth-primary-color)
+    }
+    #app-header .app-control-panel + .dropdown-menu a.descrip{
+        color: var(--fauth-primary-color)
+    }
+    #app-header .app-control-panel + .dropdown-menu a:hover{
+        background-color: var(--fauth-primary-color);
+        color: var(--fauth-accent-color)
+    }
+    #app-header .app-control-panel:hover{
+        cursor: pointer;
+        background-color: var(--fauth-primary-color);
+        color: var(--fauth-accent-color);
+        border-color: var(--fauth-accent-color)
+    }
+    #app-header .app-log-status{
+        background-color: var(--fauth-accent-dark-color);
+        height: 80px;
+        max-height: 80px
+    }
+    #app-navigation{
+        position: absolute;
+        height: auto;
+        top:0;
+        left: 0;
+        z-index: 2
+    }
+    #app-navigation > div:nth-child(1){
+        border-radius: 10px;
+        background: var(--fauth-accent-color);
+        overflow: hidden;
+    }
+    #app-navigation > div:nth-child(1) div{
+        /*position: relative;*/
+        padding: 10px;
+        border-radius: 10px;
+    }
+    #app-navigation > div:nth-child(1) div a{
+        color: var(--fauth-primary-color);
+        transition: all .3s linear;
+    }
+    #app-navigation > div:nth-child(1) div a svg{
+        font-size: 1.5em
+    }
+    #app-navigation > div:nth-child(1) div:hover{
+        background-color: var(--fauth-primary-color);
+        cursor: pointer;
+    }
+    #app-navigation > div:nth-child(1) div:hover a{
+        color: var(--fauth-accent-color)
+    }
+    #app-navigation .app-tooltip{
+        display: none;
+        position: absolute;
+        color: #ffffff;
+        top: 10px;
+        right: -110px;
+        padding: 5px;
+        width: 100px;
+        max-width: 100px;
+        background-color: var(--fauth-accent-color);
+        z-index: 2;
+        box-shadow: 1px 1px 5px var(--fauth-highlight-color);
+        border-radius: 10px;
+        font-size: .8em;
+        word-wrap: break-word;
+    }
+    #app-body{
+        height: 100px;
+        background-color: black
+    }
 }
 
 @media screen and (min-width: 768px){
-
+    #app-header{
+        padding: 50px 10px 0 10px;
+    }
 }
 
 @media screen and (min-width: 1024px){
     #app-locker-screen  #app-locker-btn{
         left: 50%;
+    }
+    #app-header{
+        padding: 30px 10px 0 10px;
+    }
+    #app-header .app-control-panel{
+        width: 50px;
+        height: 50px;
+    }
+    #app-header .app-control-panel svg{
+        font-size: 1.5em;
+    }
+    #app-navigation{
+        position: relative;
+        z-index: inherit;
     }
 }
