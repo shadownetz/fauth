@@ -128,6 +128,7 @@
         border-radius: 10px;
         background: var(--fauth-accent-color);
         overflow: hidden;
+        height: 49px;
     }
     #app-navigation > div:nth-child(1) div{
         /*position: relative;*/
@@ -165,9 +166,11 @@
         word-wrap: break-word;
     }
     #app-body{
-        height: 100px;
-        background-color: black
+        height: 450px;
+        min-height: 450px;
+        background-color: transparent;
     }
+    /* FIXME: style fauth dashboard scroll bars */
 }
 
 @media screen and (min-width: 768px){
@@ -193,5 +196,8 @@
     #app-navigation{
         position: relative;
         z-index: inherit;
+    }
+    #app-navigation > div:nth-child(1){
+        height: 343px
     }
 }

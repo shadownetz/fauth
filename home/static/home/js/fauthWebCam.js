@@ -12,6 +12,7 @@ class FauthWebCam {
         this.bodyID = $(bodyID);
         this.launchBTN = launchBTN;
         this.snapshotValue = '';
+        this.change = false
     }
     initialize(){
         this.bodyID.append(`
@@ -73,7 +74,10 @@ class FauthWebCam {
         /* Retake Snapshot */
         this.webCamRetake.click(event => this.retakeSnapshot(event));
         /* Remove FauthWebCam */
-        this.webCamNext.click(event => this.destroyWebCam(event));
+        this.webCamNext.click(event=>{
+            this.change = true;
+            this.destroyWebCam(event);
+        });
         /* Close button */
         this.webCamCloseBtn.click(event => this.destroyWebCam(event));
         // launch btn

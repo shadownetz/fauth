@@ -1,0 +1,259 @@
+@import "base.css";
+
+@keyframes plaster {
+    from { transform : scale(3)}
+    to { transform: scale(1)}
+}
+@media screen and (min-width: 320px){
+    .app-dash{
+        display: flex;
+        display: -webkit-flex;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+        background-color: var(--fauth-accent-dark-color);
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+    }
+    .app-dash .dash-content{
+        position: relative;
+        width: 100%;
+        height: 49%;
+        border-radius: 10px;
+        overflow: auto;
+    }
+    .app-dash > .part-1{
+        background-color: var(--fauth-accent-dark-color);
+        border: 1px dotted var(--fauth-primary-color);
+        margin-bottom: 1%
+    }
+    .app-dash > .part-2{
+        background-color: var(--fauth-primary-dark-color);
+    }
+    .app-dash .dash-content label{
+        position: relative;
+        display: block;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        padding: 50px 10px 40px 10px;
+        top: 15%;
+        left: 30%;
+        transition: all .3s linear;
+    }
+    .app-dash .dash-content label input[type='file']{
+        visibility: hidden;
+    }
+    .app-dash .dash-content label:hover{
+        transform: translate(1px, -10px);
+        cursor: pointer;
+    }
+    .app-dash .dash-content.part-1 label{
+        box-shadow: -1px -1px 3px #03000D;
+        color: var(--fauth-primary-color);
+    }
+    .app-dash .dash-content label svg{
+        font-size: 3em
+    }
+    .app-dash .dash-content.part-1 label:hover{
+        box-shadow: -1px 1px 5px #000000
+    }
+    .app-dash .dash-content.part-2 label{
+        box-shadow: -1px -1px 3px var(--fauth-accent-dark-color);
+        color: var(--fauth-accent-color);
+    }
+    .app-dash .dash-content.part-2 label:hover{
+        box-shadow: -1px 1px 5px var(--fauth-accent-dark-color)
+    }
+    .app-dash .dash-content.part-2 #fauth_image_err{
+        position: absolute;
+        top:0;
+        left:0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--fauth-accent-dark-trans-color);
+        z-index: 3;
+    }
+    .app-dash .dash-content.part-2 #fauth_image_err span{
+        position: relative;
+        display: block;
+        top: 40%;
+        width: 60%;
+        left: 20%;
+        right: 20%;
+        border: 2px dotted var(--danger);
+        padding: 10px;
+        color: var(--danger);
+        text-align: center;
+        font-weight: bold;
+    }
+    .app-dash .dash-content .content-info{
+        position: relative;
+        top: 30%;
+        left:0;
+        height: available;
+        padding: 10px
+    }
+    .app-dash .dash-content.part-1 .content-info{
+        box-shadow: 0 -2px 3px #03000D;
+    }
+    .app-dash .dash-content.part-2 .content-info{
+        box-shadow: 0 -2px 3px #5e547e;
+    }
+    .app-dash .dash-content .content-info p:nth-child(1){
+        font-size: 1em;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    .app-dash .dash-content .content-info p:nth-child(2){
+        font-size: .9em;
+        text-transform: capitalize;
+    }
+    .app-dash .dash-content.part-1 .content-info p:nth-child(1){
+        color: var(--fauth-primary-color);
+    }
+    .app-dash .dash-content.part-2 .content-info p:nth-child(1){
+        color: var(--fauth-accent-color);
+    }
+    /* Face recognition Process UI */
+    .app-dash #faceAuthLoadOverlay{
+        position: fixed;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,.8);
+        z-index: 1000;
+        overflow: auto;
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer{
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+        top:0;
+        left: 0;
+        width: inherit;
+        height: inherit;
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process{
+        display: inline-flex;
+        justify-content: space-around;
+        width: 80%;
+        height: 90%;
+        background: var(--fauth-accent-color) no-repeat center center;
+        background-size: cover;
+        border: 1px solid var(--fauth-highlight-color);
+        border-radius: 10px;
+        transition: all .3s linear;
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process #process_err{
+        display: inline-flex;
+        position: relative;
+        top: 0;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        background-color: rgba(0,0,0,.7);
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process #process_err .highlight{
+        position: absolute;
+        border-radius: 50%;
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process #process_err .highlight.c1{
+        width: 200px;
+        height: 200px;
+        border: 4px solid var(--danger);
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process #process_err .highlight.c2{
+        width: 170px;
+        height: 170px;
+        border: 2px solid var(--danger);
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process #process_err #process_err_msg{
+        width: 300px;
+        padding: 20px 10px 10px;
+        border: 2px solid var(--danger);
+        border-radius: 10px;
+        color: #e91a2e;
+        text-shadow: 1px 1px 1px #000000, -1px 0 1px #000000;
+        z-index: 1;
+        animation: plaster 1s cubic-bezier(0.47, 0, 0.75, 0.72);
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process #process_err .exit{
+        position: absolute;
+        display: block;
+        right: -20px;
+        top: 10px;
+        width: 50px;
+        height: 30px;
+        color: var(--danger)
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process #process_err .exit:hover{
+        cursor: pointer;
+        color: #9C0018
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1{
+        width: 50%;
+        height: 50%;
+        margin: 10px 0 10px 0;
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2{
+        width: 60%
+    }
+
+}
+
+@media screen and (min-width: 768px){
+    .app-dash .dash-content{
+        width: 49%;
+        height: 100%;
+        overflow: hidden;
+    }
+    .app-dash > .part-1{
+        margin-right: 1%;
+        margin-bottom: 0
+    }
+    .app-dash .dash-content label{
+        top: 20%;
+        left: 25%;
+        width: 200px;
+        height: 200px;
+        padding: 60px 10px 40px 10px;
+    }
+    .app-dash .dash-content label svg{
+        font-size: 5em
+    }
+    /* Face recognition Process UI */
+    .app-dash #faceAuthLoadOverlay .authContainer .process{
+        width: 60%
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1{
+        width: 45%;
+        margin: 0 1% 0 0;
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2{
+        width: 45%
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .app-dash .dash-content label{
+        left: 35%
+    }
+    /* Face recognition Process UI */
+    .app-dash #faceAuthLoadOverlay .authContainer .process{
+        width: 40%
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1{
+        width: 40%;
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2{
+        width: 40%
+    }
+}
