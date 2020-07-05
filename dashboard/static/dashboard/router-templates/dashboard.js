@@ -70,8 +70,8 @@ const Dashboard = {
             fauth_image_file: '',
             cam_auth: true,
             fauth_image_err_msg: '',
-            loading: false,
-            loading_done: false,
+            loading: true,
+            loading_done: true,
             loading_error: false,
             loading_error_message: '',
             display_bg: '',
@@ -112,7 +112,7 @@ const Dashboard = {
             // get verification response from server
             try{
                 let response = {};
-                let status = false;
+                let status = true;
                 if(status){
                     setTimeout(()=>{
                         this.display_bg = this.loading_bg[1];
