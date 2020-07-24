@@ -12,5 +12,6 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
 
     path('api/email/exist', apis.email_exist, name="api_email_exist"),
-    path('api/image/singleface', apis.validate_passport, name="api_image_single_face")
+    path('api/image/singleface', apis.validate_passport, name="api_image_single_face"),
+    path('api/image/candidate', apis.fetch_candidate_info, name="api_fetch_candidate_info")
 ]

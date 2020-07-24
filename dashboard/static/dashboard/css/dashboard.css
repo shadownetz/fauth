@@ -206,10 +206,28 @@
         width: 50%;
         height: 50%;
         margin: 10px 0 10px 0;
+        background: url("../images/bg/match_image.png") no-repeat center center;
+        background-size: cover
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1 .pro-img-box{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding-top: 30px
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1 .pro-img{
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-position: center;
+        background-size: cover;
     }
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2{
         width: 60%
     }
+
 
 }
 

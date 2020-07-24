@@ -55,8 +55,11 @@ class Candidate(models.Model):
     course = models.CharField(max_length=30, blank=True)
     faculty = models.CharField(max_length=30, blank=True)
     dob = models.DateField(blank=True)
-    date_updated = models.DateTimeField(blank=True)
+    date_updated = models.DateTimeField(blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.name)
 
 
 def user_directory_path(instance, filename):
