@@ -21,8 +21,8 @@ def compare_user_faces_from_db(base64String: str) -> dict:
             image_found = True
             return_data['email'] = obj['user'].user.email
             break
-    if image_found:
-        return_data['err_message'] = 'Image Not Found'
+    if not image_found:
+        return_data['err_message'] = 'Not Recognized'
     return return_data
 
 

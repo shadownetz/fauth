@@ -52,7 +52,6 @@ class Candidate(models.Model):
     state = models.CharField(max_length=30, blank=True)
     lga = models.CharField(_('Local Gov. Area'),max_length=30,  blank=True)
     department = models.CharField(max_length=30, blank=True)
-    course = models.CharField(max_length=30, blank=True)
     faculty = models.CharField(max_length=30, blank=True)
     dob = models.DateField(blank=True)
     date_updated = models.DateTimeField(blank=True, null=True)

@@ -3,6 +3,8 @@
     --fauth-primary-dark-color: #7d6eac;
     --fauth-primary-trans-color: rgba(158, 142, 212, 0.5);
     --fauth-highlight-color: #007bff;
+    --fauth-highlight-dark-color: #003e7d;
+    --fauth-highlight-trans-color: rgba(0, 123, 255, 0.56);
     --fauth-accent-color: #070034;
     --fauth-accent-trans-color: rgba(7, 0, 52, 0.5);
     --fauth-accent-dark-color: #040022;
@@ -12,6 +14,30 @@
 *{
     font-family: "Lucida Console", Courier, monospace;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--fauth-accent-dark-trans-color);
+    border-radius: 5px;
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: var(--fauth-highlight-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--fauth-highlight-dark-color);
+}
+
 body{
     background: var(--fauth-accent-color);
     color: #ffffff;

@@ -185,47 +185,71 @@
         z-index: 1;
         animation: plaster 1s cubic-bezier(0.47, 0, 0.75, 0.72);
     }
-    .app-dash #faceAuthLoadOverlay .authContainer .process #process_err .exit{
-        position: absolute;
-        display: block;
-        right: -20px;
-        top: 10px;
-        width: 50px;
-        height: 30px;
-        color: var(--danger)
-    }
-    .app-dash #faceAuthLoadOverlay .authContainer .process #process_err .exit:hover{
-        cursor: pointer;
-        color: #9C0018
-    }
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1,
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2{
-       background: rgba(0,0,0,.5)
+        background: rgba(0,0,0,.5);
+        width: 100%;
     }
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1{
-        width: 50%;
         height: 50%;
         margin: 10px 0 10px 0;
         background: url("../images/bg/match_image.png") no-repeat center center;
-        background-size: cover
+        background-size: 100% 170px
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2{
+        background: url("../images/bg/fauth_txt_bg.png") no-repeat center center ;
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2::before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,.5)
     }
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1 .pro-img-box{
         display: flex;
         justify-content: center;
         width: 100%;
-        padding-top: 30px
+        padding-top: 50px;
     }
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1 .pro-img{
-        width: 260px;
-        height: 260px;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
         background-repeat: no-repeat;
         background-attachment: scroll;
         background-position: center;
         background-size: cover;
+        border: 1px solid #43cce1;
+        box-shadow: 1px 1px 5px rgba(67, 204, 225, 0.61), -1px -1px 5px rgba(67, 204, 225, 0.61);
     }
-    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2{
-        width: 60%
+    .app-dash #faceAuthLoadOverlay .close{
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        width: 30px;
+        height: 30px;
+        color: var(--fauth-primary-color)
+    }
+    .app-dash #faceAuthLoadOverlay .close:hover{
+        cursor: pointer;
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2 .details{
+        height: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2 .details table{
+        margin-bottom: 0;
+        color: var(--fauth-highlight-color)
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2 .details table td{
+        border-top-color: var(--fauth-highlight-trans-color);
+    }
+    .app-dash .no-border-top{
+        border-top: none !important;
     }
 
 
@@ -258,9 +282,17 @@
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1{
         width: 45%;
         margin: 0 1% 0 0;
+        background-size: 100% 260px;
     }
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2{
         width: 45%
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1 .pro-img-box{
+        padding-top: 30px;
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1 .pro-img {
+        width: 220px;
+        height: 220px;
     }
 }
 
@@ -277,5 +309,9 @@
     }
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl2{
         width: 40%
+    }
+    .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1 .pro-img {
+        width: 260px;
+        height: 260px;
     }
 }

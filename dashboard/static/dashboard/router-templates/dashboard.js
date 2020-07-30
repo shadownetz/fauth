@@ -31,11 +31,13 @@ const Dashboard = {
         <div id="faceAuthLoadOverlay" v-if="loading">
             <!-- Our custom modal -->
             <div class="authContainer animate__animated animate__zoomIn">
+            <div class="close" @click="loading=false">
+                <i class="fa fa-window-close"></i>
+            </div>
                 <!-- when processsing authentication  -->
 <!--                <transition name="auth_load" enter-active-class="animate_animated animate_fadeIn" leave-active-class="animate_animated animate_fadeOut">-->
                     <div class="process animate__animated animate__fadeIn" :style="{backgroundImage: 'url('+display_bg+ ')'}" v-if="!loading_done">
                         <div id="process_err" v-if="loading_error">
-                            <span class="exit" @click="loading=false"><i class="fa fa-window-close"></i></span>
                             <div class="highlight c1"></div>
                             <div class="highlight c2"></div>
                             <div id="process_err_msg" class="text-center text-uppercase">
@@ -57,7 +59,60 @@ const Dashboard = {
 <!--                </transition>-->
 <!--                <transition name="auth_load_3" enter-active-class="animate_animated animate_slideInRight" leave-active-class="animate_animated animate_slideOutLeft">-->
                     <div class="process lvl2 animate__animated animate__slideInRight" v-if="loading_done">
-                        <p>User record</p>
+                        <div class="container-fluid details">
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-responsive">
+                                        <tr class="animate__animated animate__slideInLeft" style="animation-delay: .2s">
+                                            <td class="no-border-top">
+                                                <i class="fa fa-user-alt"></i> Name
+                                            </td>
+                                            <td class="no-border-top">[[candidateInfo.name]]</td>
+                                        </tr>
+                                        <tr class="animate__animated animate__slideInLeft" style="animation-delay: .3s">
+                                            <td><i class="fa fa-envelope-square"></i> Email</td>
+                                            <td>[[candidateInfo.email]]</td>
+                                        </tr>
+                                        <tr class="animate__animated animate__slideInLeft" style="animation-delay: .4s">
+                                            <td><i class="fa fa-phone-square"></i> Phone</td>
+                                            <td>[[candidateInfo.phone]]</td>
+                                        </tr>
+                                        <tr class="animate__animated animate__slideInLeft" style="animation-delay: .5s">
+                                            <td><i class="fa fa-book"></i> Registeration No</td>
+                                            <td>[[candidateInfo.regNo]]</td>
+                                        </tr>
+                                        <tr class="animate__animated animate__slideInLeft" style="animation-delay: .6s">
+                                            <td><i class="fa fa-globe"></i> State of Origin</td>
+                                            <td>[[candidateInfo.state]]</td>
+                                        </tr>
+                                        <tr class="animate__animated animate__slideInLeft" style="animation-delay: .7s">
+                                            <td><i class="fa fa-globe"></i> Local Government Area</td>
+                                            <td>[[candidateInfo.lga]]</td>
+                                        </tr>
+                                        <tr class="animate__animated animate__slideInLeft" style="animation-delay: .8s">
+                                            <td><i class="fa fa-home"></i> Current Department</td>
+                                            <td>[[candidateInfo.department]]</td>
+                                        </tr>
+                                        <tr class="animate__animated animate__slideInLeft" style="animation-delay: .9s">
+                                            <td><i class="fa fa-home"></i> Faculty</td>
+                                            <td>[[candidateInfo.faculty]]</td>
+                                        </tr>
+                                        <tr class="animate__animated animate__slideInLeft" style="animation-delay: 1s">
+                                            <td><i class="fa fa-calendar-day"></i> Date of Birth</td>
+                                            <td>[[parseDateString(candidateInfo.dob)]]</td>
+                                        </tr>
+                                        <tr class="animate__animated animate__slideInLeft" style="animation-delay: 1.1s">
+                                            <td><i class="fa fa-calendar-week"></i> Date Updated</td>
+                                            <td>[[parseDateString(candidateInfo.dateUpdated)]]</td>
+                                        </tr>
+                                        <tr class="animate__animated animate__slideInLeft" style="animation-delay: 1.2s">
+                                            <td><i class="fa fa-calendar-check"></i> Date Created</td>
+                                            <td>[[parseDateString(candidateInfo.dateCreated)]]</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 <!--                </transition>-->
                 
@@ -82,7 +137,7 @@ const Dashboard = {
             display_bg: '',
             loading_bg: [],
             api_url: '',
-            candidateInfo: {}
+            candidateInfo: {},
         }
     },
     watch: {
@@ -181,6 +236,13 @@ const Dashboard = {
             let file_type = image_file.name.split('.').pop();
             return $.inArray(file_type, ['jpg', 'png', 'jpeg']) >= 0;
         },
+        parseDateString(timestamp){
+            let date = new Date(timestamp);
+            if(date != 'Invalid Date' && date.getFullYear() !== 1970){
+                return `${date.getDate()} ${monthList[date.getMonth()]} ${date.getFullYear()}`
+            }
+            return 'No Date Specified'
+        }
     },
     created(){
         // allow elements to load before initializing

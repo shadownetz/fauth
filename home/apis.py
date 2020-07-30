@@ -50,7 +50,6 @@ def fetch_candidate_info(request):
                 "state": candidate.state,
                 "lga": candidate.lga,
                 "department": candidate.department,
-                "course": candidate.course,
                 "faculty": candidate.faculty,
                 "dob": candidate.dob,
                 'image': candidate_image,

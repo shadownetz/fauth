@@ -2,12 +2,35 @@
     --fauth-primary-color: #9e8ed4;
     --fauth-highlight-color: #007bff;
     --fauth-accent-color: #070034;
+    --fauth-highlight-dark-color: #003e7d;
     --fauth-accent-trans-color: rgba(7, 0, 52, 0.7)
     /* FIXME: add gradients for highlights  */
 
 }
 *{
     font-family: "Lucida Console", Courier, monospace;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--fauth-accent-dark-trans-color);
+    border-radius: 5px;
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: var(--fauth-highlight-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--fauth-highlight-dark-color);
 }
 body{
     background: var(--fauth-accent-color);

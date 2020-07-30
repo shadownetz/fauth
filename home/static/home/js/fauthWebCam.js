@@ -28,7 +28,7 @@ class FauthWebCam {
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row justify-content-center">
-                                <div class="col-lg-7 webcam-image-block text-left" id="webcam-camera">
+                                <div class="col-lg-7 webcam-image-block text-left" id="webcam-camera" style="overflow: hidden;">
                                     <img class="webcam-preview" src="" alt="image preview">
                                 </div>
                             </div>

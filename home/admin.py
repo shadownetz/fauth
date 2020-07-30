@@ -27,13 +27,13 @@ class CandidateAdmin(admin.ModelAdmin):
     model = Candidate
     list_display = (
         'id', 'name', 'email', 'phone', 'reg_no', 'state', 'lga', 'department',
-        'course', 'faculty', 'dob', 'date_updated', 'date_created'
+        'faculty', 'dob', 'date_updated', 'date_created'
     )
     fieldsets = (
         (None, {
             'fields': (
                 'name', 'email', 'phone', 'reg_no', 'state', 'lga', 'department',
-                'course', 'faculty', 'dob'
+                'faculty', 'dob'
             )
         }),
     )
