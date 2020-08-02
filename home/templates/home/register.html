@@ -77,6 +77,7 @@
     <input type="hidden" value="{% url 'home:api_email_exist' %}" id="js-email-exist-url">
     <input type="hidden" value="{% url 'home:api_image_single_face' %}" id="js-image-singleface-url">
     <input type="hidden" id="particles-json-url" value="{% static 'home/vendors/particles/particles-nasa.json' %}">
+    <input type="hidden" value="{% url 'home:api_user_image_exist' %}" id="js-image-exist-url">
 {% endblock %}
 
 {% block script %}

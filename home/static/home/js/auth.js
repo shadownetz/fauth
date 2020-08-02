@@ -55,6 +55,7 @@ $(function(){
         let phone = $('#id_phone').val();
         let email_exist_url = $('#js-email-exist-url').val();
         let image_single_face_url = $('#js-image-singleface-url').val();
+        let image_exist_url = $('#js-image-exist-url').val();
 
         try{
             // check if image is uploaded
@@ -71,6 +72,18 @@ $(function(){
                         image_validate_response.message,
                         "Error"
                     );
+                    loader.hide();
+                    return
+                }
+                // make sure image does not already exist
+                let image_response = await $.ajax({
+                    url: image_exist_url,
+                    type: 'POST',
+                    data: {snapshot: snapshot.val()},
+                    dataType: 'json',
+                });
+                if(image_response.status){
+                    toastr.error("It seems you have an existing record. Please login to continue", "Error");
                     loader.hide();
                     return
                 }

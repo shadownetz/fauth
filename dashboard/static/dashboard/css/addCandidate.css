@@ -1,0 +1,91 @@
+@import "base.css";
+
+@media screen and (min-width: 320px){
+    #app-add-candidate{
+        position: relative;
+        background: var(--fauth-accent-dark-color);
+        min-height: 400px;
+        border-radius: 10px;
+        padding-bottom: 20px
+    }
+    #app-add-candidate .candidate-profile{
+        width: 250px;
+        height: 250px;
+        border: 1px solid var(--fauth-primary-color);
+        color: var(--fauth-primary-color);
+        border-radius: 50%;
+        padding: 80px;
+        transition: all .3s linear;
+    }
+    #app-add-candidate .candidate-profile img{
+        width: inherit;
+        height: inherit;
+        border-radius: inherit;
+    }
+    #app-add-candidate .candidate-profile:hover{
+        cursor: pointer;
+        background: var(--fauth-primary-color);
+        color: var(--fauth-accent-color)
+    }
+    #app-add-candidate .candidate-profile input[type='file']{
+        visibility: hidden;
+        position: absolute;
+    }
+    #app-add-candidate .profile-toggle{
+        color: var(--fauth-primary-color);
+    }
+    #app-add-candidate .profile-err{
+        position: absolute;
+        justify-self: center;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background: var(--fauth-accent-dark-trans-color);
+        z-index: 3;
+        padding: 70px 50px 0;
+        color: var(--danger);
+        font-weight: bold;
+        text-shadow: 1px 1px 1px #000000;
+    }
+    .candidateDetails{
+        /*padding: 3rem 50px 0 200px;*/
+        color: var(--fauth-primary-color)
+    }
+    .candidateDetails > .row > .col-12 > .col-12:not(:first-child){
+        padding-top: 15px;
+    }
+    .candidateDetails > .row > .col-12 > .col-12 input::placeholder{
+        color: var(--fauth-primary-trans-color)
+    }
+    .saveBox{
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        color: var(--fauth-accent-color);
+        background: var(--fauth-primary-color);
+        border-radius: 5px;
+        text-align: center;
+        padding: 10px;
+        width: 100px;
+        transition: all .3s linear;
+    }
+    .saveBox:hover{
+        color: var(--fauth-primary-color);
+        background: var(--fauth-accent-color);
+        box-shadow: 1px 1px 5px var(--fauth-highlight-color);
+    }
+}
+
+@media screen and (min-width: 768px){
+    .profile::after{
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50px;
+        width: 0;
+        height: 410px;
+        border: 1px solid var(--fauth-highlight-color);
+        border-radius: 50%;
+        /*box-shadow: 1px 1px 5px var(--fauth-highlight-color), -1px -1px 5px var(--fauth-highlight-color);*/
+    }
+}

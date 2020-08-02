@@ -68,6 +68,15 @@ body{
 .hover:hover{
     cursor: pointer;
 }
+.hide-overflow-x{
+    overflow-x: hidden;
+}
+.hide-overflow-y{
+    overflow-y: hidden;
+}
+.hide-overflow{
+    overflow: hidden!important;
+}
 .pd-t-10{
     padding-top: 10px
 }
@@ -122,6 +131,8 @@ input.form-control, input.form-control:focus{
 /* loading overlay */
 #loading{
     position: absolute;
+    display: flex;
+    justify-content: center;
     top:0;
     left:0;
     width: 100%;
@@ -134,7 +145,7 @@ input.form-control, input.form-control:focus{
     position: relative;
     display: block;
     top: 40%;
-    left:40%;
+    /*left:40%;*/
     width: 70px;
     height: 70px;
     border-top: 2px solid var(--fauth-highlight-color);
@@ -142,6 +153,13 @@ input.form-control, input.form-control:focus{
     background-color: transparent;
     border-radius: 50%;
     animation: rotate .5s linear infinite 0s;
+}
+/* Field Error */
+.field-err{
+    border-color: var(--danger)!important;
+}
+.field-err:focus{
+    box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25)!important;
 }
 /* WEBCAM */
 @media screen and (min-width: 320px){
@@ -181,12 +199,13 @@ input.form-control, input.form-control:focus{
     .webcam-footer{
         border-top-color: transparent;
     }
-    .webcam-footer > button{
+    .webcam-footer  button{
         border-radius: 40%;
+        margin: 5px
     }
-    .webcam-footer > button:nth-child(2),
-    .webcam-footer > button:nth-child(3)
-    {
-        display: none
-    }
+    /*.webcam-footer > button:nth-child(2),*/
+    /*.webcam-footer > button:nth-child(3)*/
+    /*{*/
+    /*    display: none*/
+    /*}*/
 }

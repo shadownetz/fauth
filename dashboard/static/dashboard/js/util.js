@@ -19,3 +19,16 @@ function loading(ref){
         }
     })
 }
+
+function validateImageUpload(files, valid_extensions=[]){
+    let status = true;
+    for(let file of files){
+        let file_type = file.name.split('.').pop();
+        status = status && $.inArray(file_type, valid_extensions) >= 0;
+    }
+    return status
+}
+
+function validateEmailAddress(email){
+    return !!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+}

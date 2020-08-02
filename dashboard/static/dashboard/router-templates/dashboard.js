@@ -3,9 +3,8 @@ const Dashboard = {
     template: `
 <div class="app-dash">
     <div class="dash-content part-1">
-        <label class="text-center" id="app-webcam-btn">
+        <label class="text-center" id="app-webcam-btn" @click="displayCam">
             <i class="fa fa-camera-retro fa-5x"></i>
-            <input type="hidden" id="id_snapshot" :value="listenToCamImage">
         </label>
         <div class="content-info text-left">
             <p>WebCam</p>
@@ -121,12 +120,13 @@ const Dashboard = {
             </div>
         </div>
     </transition>
+    <web-cam :show="display_cam" @capture="captured($event)"></web-cam>
 </div>
 `,
     delimiters: ['[[', ']]'],
     data(){
         return {
-            fauthWebCam: null,
+            display_cam: false,
             snapshot_value: '',
             fauth_image_file: '',
             fauth_image_err_msg: '',
@@ -148,21 +148,6 @@ const Dashboard = {
                 this.loading_error_message = '';
                 this.candidateInfo = {}
             }
-        }
-    },
-    computed: {
-        listenToCamImage(){
-            setInterval(()=>{
-                let b64Image = this.fauthWebCam.snapshotValue;
-                let changeStatus = this.fauthWebCam.change;
-                // new snapshot has been taken
-                if(b64Image !== this.snapshot_value && changeStatus){
-                    this.fauthWebCam.change = false;    // reset change flag
-                    this.snapshot_value = b64Image;
-                    this.processAuthentication()
-                }
-            }, 500);
-            return ''
         }
     },
     methods: {
@@ -215,7 +200,7 @@ const Dashboard = {
         },
         assignSnapshotImage(event){
             let image = event.target.files[0];
-            let image_ver = this.validateImageUpload(image);
+            let image_ver = validateImageUpload([image], ['jpg', 'png', 'jpeg']);
             if(image_ver){
                 let reader = new FileReader();
                 reader.onload = (e)=>{
@@ -232,27 +217,28 @@ const Dashboard = {
             // reset image input to further detect change event
             $('#id_fauth_image_file').val("");
         },
-        validateImageUpload(image_file){
-            let file_type = image_file.name.split('.').pop();
-            return $.inArray(file_type, ['jpg', 'png', 'jpeg']) >= 0;
-        },
         parseDateString(timestamp){
             let date = new Date(timestamp);
             if(date != 'Invalid Date' && date.getFullYear() !== 1970){
                 return `${date.getDate()} ${monthList[date.getMonth()]} ${date.getFullYear()}`
             }
             return 'No Date Specified'
+        },
+        displayCam(){
+            $('#webCamModal').modal({
+                backdrop: 'static',
+                show: true
+            });
+            this.display_cam = true
+        },
+        captured(value){
+            this.snapshot_value = value;
+            this.processAuthentication();
         }
     },
     created(){
         // allow elements to load before initializing
         setTimeout(()=>{
-            this.fauthWebCam = new FauthWebCam({
-                launchBTN: '#app-webcam-btn',
-                bodyID: '.app-dash',
-                outputID: '#id_snapshot'
-            });
-            this.fauthWebCam.initialize();
             let bg1 = $('#auth_loading_img_1').val();   // face verification gif image
             this.loading_bg.push(bg1);
             this.display_bg = bg1;
@@ -263,6 +249,13 @@ const Dashboard = {
             $('[data-toggle="tooltip"]').tooltip({
                 container: 'body',
             });
+        }, 500)
+    },
+    components: {webCam: fauthWebCam},
+    beforeRouteLeave(to, from, next){
+        this.display_cam = false;
+        setTimeout(()=>{
+            next();
         }, 500)
     }
 };

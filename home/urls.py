@@ -13,5 +13,8 @@ urlpatterns = [
 
     path('api/email/exist', apis.email_exist, name="api_email_exist"),
     path('api/image/singleface', apis.validate_passport, name="api_image_single_face"),
-    path('api/image/candidate', apis.fetch_candidate_info, name="api_fetch_candidate_info")
+    path('api/image/user/exist', apis.user_image_exist, name="api_user_image_exist"),
+    path('api/image/candidate', apis.fetch_candidate_info, name="api_fetch_candidate_info"),
+    path('api/image/candidate/exist', apis.candidate_image_exist, name="api_candidate_image_exist"),
+    path('api/candidate/create', apis.add_candidate, name="api_add_candidate"),
 ]
