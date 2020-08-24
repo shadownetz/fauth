@@ -72,13 +72,13 @@ def candidate_directory_path(instance, filename):
 
 
 class UserImage(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='userImage')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
     image = models.ImageField(upload_to=user_directory_path, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
 
 class CandidateImage(models.Model):
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='candidateImage')
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE, related_name='candidate')
     image = models.ImageField(upload_to=candidate_directory_path, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
 
