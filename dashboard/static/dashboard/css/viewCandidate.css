@@ -86,7 +86,11 @@
 #v-candidate-modal .modal-content{
     background-color: transparent;
 }
-#v-candidate-modal .modal-header{
+#e-candidate-modal .modal-content{
+    background-color: var(--fauth-accent-color);
+}
+#v-candidate-modal .modal-header,
+#e-candidate-modal .modal-header{
     border-bottom: none;
 }
 #v-candidate-modal .cand-prev{
@@ -96,9 +100,24 @@
     background: var(--fauth-highlight-trans-color) no-repeat center top;
     background-size: cover;
 }
-#v-candidate-modal .modal-header .close{
+#v-candidate-modal .modal-header .close,
+#e-candidate-modal .modal-content .close{
     color: var(--fauth-highlight-color)
 }
-#v-candidate-modal .modal-header .close:focus{
+#v-candidate-modal .modal-header .close:focus,
+
+/** Edit candidate modal **/
+#e-candidate-modal .modal-header .close:focus{
     outline: none;
+}
+#e-candidate-profile-img .img-row{
+    display: flex;
+    justify-content: center;
+}
+#e-candidate-profile-img .img-block{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--fauth-highlight-color) no-repeat center top;
+    background-size: cover;
 }

@@ -30,7 +30,7 @@ const ViewCandidate = {
                                 <i class="fa fa-ellipsis-v"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="javascript:void(0)">Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0)" @click="s_candidate=candidate" data-toggle="modal" data-target="#e-candidate-modal">Edit</a>
                                 <a class="dropdown-item" href="javascript:void(0)">Delete</a>
                             </div>
                         </td>
@@ -80,6 +80,36 @@ const ViewCandidate = {
             </div>
           </div>
         </div>
+        <!-- Edit Candidate Modal -->
+        <div class="modal fade" id="e-candidate-modal" tabindex="-1" role="dialog" aria-labelledby="e-candidate-label-modal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="e-candidate-label-modal">[[s_candidate.name]]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              <div class="container-fluid">
+                  <div class="row">
+                        <div class="col-12 e-candidate-profile-img">
+                            <div class="img-row">
+                                <div class="img-block" :style="{backgroundImage: 'url('+s_candidate.image+')'}">
+                            </div>
+                            </div>
+                        </div>
+                   </div>
+               </div>
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
 </div>
     `,
@@ -91,7 +121,8 @@ const ViewCandidate = {
             error: false,
             message: '',
             candidates: [],
-            previewImg: ''
+            previewImg: '',
+            s_candidate: {}
         }
     },
     methods: {
