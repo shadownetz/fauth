@@ -31,7 +31,6 @@ def fetch_candidate_info(request):
                 "faculty": candidate.faculty,
                 "dob": candidate.dob,
                 'image': candidate_image,
-                # 'snapshot': snapshot,
                 "dateUpdated": candidate.date_updated,
                 "dateCreated": candidate.date_created
             }
@@ -55,7 +54,7 @@ def add_candidate(request):
             image_name = request.POST['email'].split("@")[0]
             fauthImage = FauthImage(request.POST['snapshot_value'], name=image_name)
             image_file = fauthImage.get_file()
-            candidate = Candidate.objects.create(
+            _candidate = Candidate.objects.create(
                 name=request.POST['name'],
                 email=request.POST['email'],
                 phone=request.POST['phone'],
@@ -66,7 +65,8 @@ def add_candidate(request):
                 faculty=request.POST['faculty'],
                 dob=date_of_birth
             )
-            candidate.candidateImage.create(
+            CandidateImage.objects.create(
+                candidate=_candidate,
                 image=image_file
             )
             data['status'] = True
@@ -88,18 +88,61 @@ def fetch_candidates(request):
             tmp_candidate['image'] = _image.image.url
         finally:
             tmp_data = {
-                    "name": candidate.name,
-                    "email": candidate.email,
-                    "phone": candidate.phone,
-                    "regNo": candidate.reg_no,
-                    "state": candidate.state,
-                    "lga": candidate.lga,
-                    "department": candidate.department,
-                    "faculty": candidate.faculty,
-                    "dob": candidate.dob,
-                    "dateUpdated": candidate.date_updated,
-                    "dateCreated": candidate.date_created,
-                }
+                "id": candidate.id,
+                "name": candidate.name,
+                "email": candidate.email,
+                "phone": candidate.phone,
+                "regNo": candidate.reg_no,
+                "state": candidate.state,
+                "lga": candidate.lga,
+                "department": candidate.department,
+                "faculty": candidate.faculty,
+                "dob": candidate.dob,
+                "dateUpdated": candidate.date_updated,
+                "dateCreated": candidate.date_created,
+            }
             tmp_candidate = {**tmp_candidate, **tmp_data}
             candidates.append(tmp_candidate)
     return JsonResponse(data={'candidates': candidates})
+
+
+def update_candidate(request):
+    response = {
+        'status': False,
+        'message': 'Unable to Update Data'
+    }
+    if request.method == 'POST':
+        _id = request.POST['id']
+        try:
+            s_candidate = Candidate.objects.get(pk=_id)
+            image_ref = None
+            _image = request.POST['image']
+            _dob = request.POST['dob']
+            _email = request.POST['email']
+            _dob = datetime.datetime.strptime(_dob, '%Y-%m-%dT%H:%M:%S.%fZ')
+            s_candidate.name = request.POST['name']
+            s_candidate.email = _email
+            s_candidate.phone = request.POST['phone']
+            s_candidate.reg_no = request.POST['regNo']
+            s_candidate.state = request.POST['state']
+            s_candidate.lga = request.POST['lga']
+            s_candidate.department = request.POST['department']
+            s_candidate.faculty = request.POST['faculty']
+            s_candidate.dob = _dob
+            s_candidate.date_updated = datetime.datetime.now()
+            if _image:
+                image_name = _email.split("@")[0] or str(datetime.datetime.now())
+                fauthImage = FauthImage(_image, name=image_name)
+                _image = fauthImage.get_file()
+                image_ref = CandidateImage.objects.get(candidate=s_candidate)
+                image_ref.image = _image
+        except Candidate.DoesNotExist:
+            response['message'] = 'Candidate does not exist'
+        except IntegrityError:
+            response['message'] = "Integrity Error. Duplicate Registration Number found"
+        else:
+            if image_ref:
+                image_ref.save()
+            s_candidate.save()
+            response['status'] = True
+    return JsonResponse(data=response)

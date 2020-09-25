@@ -20,4 +20,5 @@ urlpatterns = [
     path('api/candidate/create', dashboard_apis.add_candidate, name="api_add_candidate"),
     path('api/candidate/single', dashboard_apis.fetch_candidate_info, name="api_fetch_candidate_info"),
     path('api/candidate/all', dashboard_apis.fetch_candidates, name="api_fetch_candidates"),
+    path('api/candidate/update', dashboard_apis.update_candidate, name="api_update_candidate"),
 ]
