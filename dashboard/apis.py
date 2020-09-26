@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from home.models import User, Candidate, CandidateImage
-from home.utils import compare_candidate_faces_from_db
+from home.utils import compare_candidate_faces_from_db, compare_user_faces_from_db
 # from django.views.decorators.csrf import csrf_exempt
 import datetime
 from fauth.face import FauthImage
@@ -131,15 +131,21 @@ def update_candidate(request):
             s_candidate.dob = _dob
             s_candidate.date_updated = datetime.datetime.now()
             if _image:
-                image_name = _email.split("@")[0] or str(datetime.datetime.now())
-                fauthImage = FauthImage(_image, name=image_name)
-                _image = fauthImage.get_file()
-                image_ref = CandidateImage.objects.get(candidate=s_candidate)
-                image_ref.image = _image
+                face_exist = compare_user_faces_from_db(_image)
+                if not face_exist['err_message']:
+                    image_name = _email.split("@")[0] or str(datetime.datetime.now())
+                    fauthImage = FauthImage(_image, name=image_name)
+                    _image = fauthImage.get_file()
+                    image_ref = CandidateImage.objects.get(candidate=s_candidate)
+                    image_ref.image = _image
+                else:
+                    raise ValueError
         except Candidate.DoesNotExist:
             response['message'] = 'Candidate does not exist'
         except IntegrityError:
             response['message'] = "Integrity Error. Duplicate Registration Number found"
+        except ValueError:
+            response['message'] = "Profile Image Error. No face found in uploaded image"
         else:
             if image_ref:
                 image_ref.save()
