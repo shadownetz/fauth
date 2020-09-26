@@ -179,8 +179,10 @@ const ViewCandidate = {
         dob: {
             get: function(){
                 let _date = new Date(this.s_candidate.dob);
-                if(_date.getTime() === _date.getTime())
-                    return `${_date.getFullYear()}-${_date.getMonth()<10?'0'+_date.getMonth(): _date.getMonth()}-${_date.getDate()<10?'0'+_date.getDate(): _date.getDate()}`;
+                if(_date.getTime() === _date.getTime()){
+                    let month = (_date.getMonth() + 1);
+                    return `${_date.getFullYear()}-${month<10?'0'+month: month}-${_date.getDate()<10?'0'+_date.getDate(): _date.getDate()}`;
+                }
                 return ''
             },
             set: function (new_value){
@@ -208,6 +210,8 @@ const ViewCandidate = {
             loader.hide()
         },
         async updateCandidateInfo(){
+            if(!this.validateInfo())
+                return
             let loader = loading('#e-candidate-modal-body');
             let update_data = this.s_candidate;
             let _image = {image: null};
@@ -230,10 +234,10 @@ const ViewCandidate = {
                     this.fetchCandidates();
                     toastr.success("Candidate Data Updated", "Success")
                 }else{
-                   toastr.error(response.message)
+                    toastr.error(response.message)
                 }
             }catch (e) {
-               toastr.error(e.message)
+                toastr.error(e.message)
             }finally {
                 loader.hide()
             }
@@ -265,6 +269,22 @@ const ViewCandidate = {
             this.new_profile_img = null;
             $('#candidate-image').val('');
             $('.img-block').css('background-image', `url(${this.s_candidate.image})`)
+        },
+        validateInfo(){
+            let status = true;
+            try{
+                if(!this.s_candidate.name)
+                    throw toastr.error("The name field should not be blank");
+                if(!this.s_candidate.dob.includes('-') || !this.s_candidate.dob)
+                    throw toastr.error("Enter the candidate's date of birth");
+                if(!this.s_candidate.regNo)
+                    throw toastr.error("Please provide the candidate's registration number");
+                else if(!validateEmailAddress(this.s_candidate.email))
+                    throw toastr.error("Invalid email address")
+            }catch (e) {
+                status = false
+            }
+            return status
         }
     },
     created(){
