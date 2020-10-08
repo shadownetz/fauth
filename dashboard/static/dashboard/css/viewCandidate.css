@@ -86,11 +86,13 @@
 #v-candidate-modal .modal-content{
     background-color: transparent;
 }
-#e-candidate-modal .modal-content{
+#e-candidate-modal .modal-content,
+#d-candidate-modal .modal-content{
     background-color: var(--fauth-accent-color);
 }
 #v-candidate-modal .modal-header,
-#e-candidate-modal .modal-header{
+#e-candidate-modal .modal-header,
+#d-candidate-modal .modal-header{
     border-bottom: none;
 }
 #v-candidate-modal .cand-prev{
@@ -101,7 +103,9 @@
     background-size: cover;
 }
 #v-candidate-modal .modal-header .close,
-#e-candidate-modal .modal-content .close{
+#e-candidate-modal .modal-content .close,
+#d-candidate-modal .modal-content .close
+{
     color: var(--fauth-highlight-color)
 }
 #v-candidate-modal .modal-header .close:focus,

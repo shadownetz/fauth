@@ -152,3 +152,20 @@ def update_candidate(request):
             s_candidate.save()
             response['status'] = True
     return JsonResponse(data=response)
+
+
+def delete_candidate(request):
+    response = {
+        'status': False,
+        'message': ''
+    }
+    if request.method == 'POST':
+        candidate_id = request.POST['id']
+        if candidate_id:
+            try:
+                candidate = Candidate.objects.get(pk=candidate_id)
+                candidate.delete()
+                response['status'] = True
+            except Candidate.DoesNotExist:
+                pass
+    return JsonResponse(data=response)

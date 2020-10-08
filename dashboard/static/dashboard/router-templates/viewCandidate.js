@@ -31,7 +31,7 @@ const ViewCandidate = {
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="javascript:void(0)" @click="s_candidate=candidate" data-toggle="modal" data-target="#e-candidate-modal">Edit</a>
-                                <a class="dropdown-item" href="javascript:void(0)">Delete</a>
+                                <a class="dropdown-item" href="javascript:void(0)" @click="view_delete_modal">Delete</a>
                             </div>
                         </td>
                         <td>
@@ -158,6 +158,31 @@ const ViewCandidate = {
             </div>
           </div>
         </div>
+        <!-- Delete Candidate Modal -->
+        <div class="modal animate__animated animate__slideInDown" tabindex="-1" id="d-candidate-modal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h6 class="modal-title">You are about to delete this candidate?</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body py-5">
+                    <div class="row justify-content-around">
+                        <template v-if="!delete_in_progress">
+                            <button class="btn btn-primary btn-lg">proceed <i class="fa fa-thumbs-up"></i></button>
+                            <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">this was a mistake <i class="fa fa-thumbs-down"></i></button>
+                        </template>
+                        <div class="col-12 pd-2" v-else>
+                            <progress-bar :curr_value="50"/>
+                        </div>
+                        
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
     </div>
 </div>
     `,
@@ -172,7 +197,8 @@ const ViewCandidate = {
             candidates: [],
             previewImg: '',
             s_candidate: {},
-            new_profile_img: null
+            new_profile_img: null,
+            delete_in_progress: false
         }
     },
     computed: {
@@ -285,13 +311,26 @@ const ViewCandidate = {
                 status = false
             }
             return status
+        },
+        view_delete_modal(){
+          $('#d-candidate-modal').modal('show')
+        },
+        delete_candidate(id){
+
         }
+    },
+    components: {
+        progressBar
     },
     created(){
         setTimeout(()=>{
             this.api_url = $('#api_fetch_candidates_url').val();
             this.update_candidate_url = $('#api_update_candidate_url').val();
             this.fetchCandidates();
+            $('#d-candidate-modal').modal({
+                backdrop: 'static',
+                show: false
+            })
         }, 500)
     }
 };

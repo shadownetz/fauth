@@ -1,7 +1,7 @@
 from django.urls import path, include
 from . import views
 from . import apis
-from dashboard import apis as dashboard_apis
+from dashboard.apis import candidateApi as dashboard_apis
 
 app_name = 'home'
 

@@ -210,3 +210,11 @@ input.form-control, input.form-control:focus{
     /*    display: none*/
     /*}*/
 }
+
+/** Progress Bar **/
+.progress{
+    background-color: var(--fauth-primary-color);
+}
+.progress-bar{
+  background-color: var(--fauth-accent-color);
+}
