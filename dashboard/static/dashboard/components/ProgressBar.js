@@ -2,12 +2,14 @@ const progressBar = {
     name: 'ProgressBar',
     template: `
         <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+            <div 
+            id="fauth-progress-bar" 
+            class="progress-bar progress-bar-striped progress-bar-animated" 
             role="progressbar" 
             :aria-valuenow="curr_value" 
             :aria-valuemin="min" 
             :aria-valuemax="max" 
-            :style="{width:curr_value+'%'}">
+            >
             [[curr_value+'%']]
             </div>
         </div>
@@ -25,14 +27,31 @@ const progressBar = {
         curr_value: {
             type: Number,
             required: true
+        },
+        mount: {
+            type: Boolean,
+            default: false
         }
     },
-    data(){
-        return {
-
+    watch: {
+        /**
+         * Animate to dynamic values flawlessly
+         * @param newVal
+         */
+        curr_value(newVal){
+            let fauth_progress = $('#fauth-progress-bar');
+            fauth_progress.stop(true, false);
+            fauth_progress.animate({
+                width: newVal+'%'
+            }, 'fast')
+        },
+        /**
+         * If component is unmounted reset progress value to default
+         * @param newVal
+         */
+        mount(newVal){
+            if(!newVal)
+                this.curr_value = 0
         }
-    },
-    methods: {
-
     }
 };

@@ -31,7 +31,7 @@ const ViewCandidate = {
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="javascript:void(0)" @click="s_candidate=candidate" data-toggle="modal" data-target="#e-candidate-modal">Edit</a>
-                                <a class="dropdown-item" href="javascript:void(0)" @click="view_delete_modal">Delete</a>
+                                <a class="dropdown-item" href="javascript:void(0)" @click="view_delete_modal(candidate)">Delete</a>
                             </div>
                         </td>
                         <td>
@@ -168,14 +168,15 @@ const ViewCandidate = {
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div class="modal-body py-5">
+                  <div class="modal-body py-3">
+                  <div class="col-12 text-danger text-center"><h6>This can not be undone!</h6></div>
                     <div class="row justify-content-around">
                         <template v-if="!delete_in_progress">
-                            <button class="btn btn-primary btn-lg">proceed <i class="fa fa-thumbs-up"></i></button>
-                            <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">this was a mistake <i class="fa fa-thumbs-down"></i></button>
+                            <button class="btn btn-primary btn-lg" @click="delete_candidate">proceed <i class="fa fa-thumbs-up"></i></button>
+                            <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">this was a mistake <i class="fa fa-ban"></i></button>
                         </template>
                         <div class="col-12 pd-2" v-else>
-                            <progress-bar :curr_value="50"/>
+                            <progress-bar :curr_value="progress_value" :mount="delete_in_progress"/>
                         </div>
                         
                     </div>
@@ -191,6 +192,7 @@ const ViewCandidate = {
         return {
             api_url: "",
             update_candidate_url: "",
+            delete_candidate_url: "",
             loading: true,
             error: false,
             message: '',
@@ -198,7 +200,8 @@ const ViewCandidate = {
             previewImg: '',
             s_candidate: {},
             new_profile_img: null,
-            delete_in_progress: false
+            delete_in_progress: false,
+            progress_value: 0
         }
     },
     computed: {
@@ -312,11 +315,41 @@ const ViewCandidate = {
             }
             return status
         },
-        view_delete_modal(){
-          $('#d-candidate-modal').modal('show')
+        view_delete_modal(_candidate){
+            this.s_candidate = _candidate;
+            $('#d-candidate-modal').modal('show')
         },
-        delete_candidate(id){
-
+        async delete_candidate(){
+            this.delete_in_progress = true;
+            let del_interval = setInterval(()=>{
+                if(this.progress_value < 60)
+                    this.progress_value += 10
+            }, 1000);
+            try{
+                let baseURL = location.href.split('/');
+                // protocol, host
+                baseURL = baseURL[0]+'//'+baseURL[2];
+                let response = await $.ajax({
+                    url: baseURL+this.delete_candidate_url,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {id: this.s_candidate.id}
+                });
+                if(response.status){
+                    clearInterval(del_interval);
+                    this.progress_value = 100;
+                    toastr.success("Candidate Deleted");
+                    this.fetchCandidates();
+                }else
+                    throw response
+            }catch (e) {
+                toastr.error('Unable to delete candidate:', e.message)
+            }finally {
+                setTimeout(()=>{
+                    this.delete_in_progress = false;
+                    $('#d-candidate-modal').modal('hide')
+                }, 2000)
+            }
         }
     },
     components: {
@@ -326,6 +359,7 @@ const ViewCandidate = {
         setTimeout(()=>{
             this.api_url = $('#api_fetch_candidates_url').val();
             this.update_candidate_url = $('#api_update_candidate_url').val();
+            this.delete_candidate_url = $('#api_delete_candidate_url').val();
             this.fetchCandidates();
             $('#d-candidate-modal').modal({
                 backdrop: 'static',

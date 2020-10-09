@@ -167,5 +167,5 @@ def delete_candidate(request):
                 candidate.delete()
                 response['status'] = True
             except Candidate.DoesNotExist:
-                pass
+                response['message'] = 'Candidate does not exist'
     return JsonResponse(data=response)
