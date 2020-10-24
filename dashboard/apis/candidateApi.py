@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from home.models import User, Candidate, CandidateImage
-from home.utils import compare_candidate_faces_from_db, compare_user_faces_from_db
+from home.utils import compare_candidate_faces_from_db, compare_user_faces_from_db, fetch_candidate_images
 # from django.views.decorators.csrf import csrf_exempt
 import datetime
 from fauth.face import FauthImage
@@ -168,4 +168,28 @@ def delete_candidate(request):
                 response['status'] = True
             except Candidate.DoesNotExist:
                 response['message'] = 'Candidate does not exist'
+    return JsonResponse(data=response)
+
+
+def fetch_images(request):
+    response = {
+        'images': [],
+    }
+    if request.method == 'POST':
+        response['images'] = fetch_candidate_images(request.POST['id'])
+    return JsonResponse(data=response)
+
+
+def delete_image(request):
+    response = {
+        'status': False,
+        'message': 'Invalid Request'
+    }
+    if request.method == 'POST':
+        try:
+            CandidateImage.objects.get(pk=request.POST['id']).delete()
+        except CandidateImage.DoesNotExist:
+            response['message'] = 'Invalid Request'
+        else:
+            response['status'] = True
     return JsonResponse(data=response)

@@ -187,16 +187,16 @@ const AddCandidate = {
                     throw {message: email_validate_response.message}
                 }
                 // Does image already exist
-                let image_exist_url = $('#js-image-exist-url').val();
-                let image_response = await $.ajax({
-                    url: baseURL+image_exist_url,
-                    type: 'POST',
-                    data: {snapshot: this.snapshot_value},
-                    dataType: 'json',
-                });
-                if(image_response.status){
-                    throw {message: "A record already exist for this candidate"}
-                }
+                // let image_exist_url = $('#js-image-exist-url').val();
+                // let image_response = await $.ajax({
+                //     url: baseURL+image_exist_url,
+                //     type: 'POST',
+                //     data: {snapshot: this.snapshot_value},
+                //     dataType: 'json',
+                // });
+                // if(image_response.status){
+                //     throw {message: "A record already exist for this candidate"}
+                // }
                 // make sure valid passport is uploaded and has a single face
                 let image_single_face_url = $('#js-image-singleface-url').val();
                 let image_validate_response = await $.ajax({

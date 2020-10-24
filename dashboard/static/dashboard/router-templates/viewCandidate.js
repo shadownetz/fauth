@@ -31,6 +31,7 @@ const ViewCandidate = {
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="javascript:void(0)" @click="s_candidate=candidate" data-toggle="modal" data-target="#e-candidate-modal">Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0)" @click="view_images(candidate.id)">Images</a>
                                 <a class="dropdown-item" href="javascript:void(0)" @click="view_delete_modal(candidate)">Delete</a>
                             </div>
                         </td>
@@ -322,8 +323,11 @@ const ViewCandidate = {
         async delete_candidate(){
             this.delete_in_progress = true;
             let del_interval = setInterval(()=>{
-                if(this.progress_value < 60)
-                    this.progress_value += 10
+                if(this.progress_value < 60){
+                    this.progress_value += 10;
+                }else{
+                    clearInterval(del_interval);
+                }
             }, 1000);
             try{
                 let baseURL = location.href.split('/');
@@ -336,8 +340,6 @@ const ViewCandidate = {
                     data: {id: this.s_candidate.id}
                 });
                 if(response.status){
-                    clearInterval(del_interval);
-                    this.progress_value = 100;
                     toastr.success("Candidate Deleted");
                     this.fetchCandidates();
                 }else
@@ -345,11 +347,16 @@ const ViewCandidate = {
             }catch (e) {
                 toastr.error('Unable to delete candidate:', e.message)
             }finally {
+                this.progress_value = 100;
                 setTimeout(()=>{
                     this.delete_in_progress = false;
+                    this.progress_value = 0;
                     $('#d-candidate-modal').modal('hide')
                 }, 2000)
             }
+        },
+        view_images(candidate_id){
+            this.$router.push({name:'ViewCandidateImages', params: {id:candidate_id}})
         }
     },
     components: {

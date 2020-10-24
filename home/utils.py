@@ -1,4 +1,4 @@
-from .models import UserImage, CandidateImage
+from .models import UserImage, CandidateImage, Candidate
 from fauth.face import FauthImage, compare_faces
 import base64
 
@@ -58,3 +58,25 @@ def compare_candidate_faces_from_db(base64String: str) -> dict:
                 return_data['data']['image'] = b64Image
                 break
     return return_data
+
+
+def fetch_candidate_images(candidate_id) -> list:
+    """
+    Fetch list of candidate images from the database
+    :param candidate_id:
+    :return: []
+    """
+    images = []
+    try:
+        candidate = Candidate.objects.get(pk=candidate_id)
+    except Candidate.DoesNotExist:
+        pass
+    else:
+        candidate_images = CandidateImage.objects.filter(candidate=candidate)
+        if candidate_images:
+            for candidateImage in candidate_images:
+                images.append({
+                    'path': candidateImage.image.url,
+                    'id': candidateImage.id
+                })
+    return images

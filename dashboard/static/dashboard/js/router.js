@@ -13,6 +13,11 @@ const routes = [
         path: '/dashboard/view-candidate',
         name: 'ViewCandidate',
         component: ViewCandidate
+    },
+    {
+        path:'/dashboard/candidate-images/:id',
+        name: 'ViewCandidateImages',
+        component: candidateImages
     }
 ];
 

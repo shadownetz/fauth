@@ -1,0 +1,74 @@
+@import "base.css";
+
+#app-candidate-images{
+    position: relative;
+    background: var(--fauth-accent-dark-color);
+    height: 450px;
+    max-height: 450px;
+    border-radius: 10px;
+    overflow: auto;
+}
+#app-candidate-images .card{
+    position: relative;
+    background-color: var(--fauth-accent-color);
+    color: var(--fauth-primary-color);
+    transition: all .3s linear;
+}
+#app-candidate-images .card .delete-btn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: var(--fauth-accent-dark-trans-color);
+    color: var(--danger);
+    transition: all .3s linear;
+}
+#app-candidate-images .card .delete-btn:hover{
+    cursor: pointer;
+    box-shadow: -1px 1px 2px var(--fauth-highlight-trans-color);
+}
+#app-candidate-images .card-img-top{
+    width: 100%;
+    height: 200px;
+    background: var(--fauth-primary-color) no-repeat center center;
+    background-size: cover;
+}
+#app-candidate-images .card .action-block{
+    display: none;
+    position: relative;
+    height: 50px;
+    background-color: var(--fauth-accent-dark-trans-color);
+    top: 90px;
+}
+#app-candidate-images .card .action-block a{
+    text-decoration: none;
+}
+#app-candidate-images .add-image-btn{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: var(--fauth-primary-color);
+    background-color: var(--fauth-accent-color);
+    border-radius: 10px;
+    transition: all .3s linear;
+}
+#app-candidate-images .add-image-btn:hover{
+    cursor: pointer;
+    background-color: var(--fauth-accent-dark-color);
+    box-shadow: 1px 1px 1px var(--fauth-highlight-trans-color), -1px -1px 1px var(--fauth-highlight-trans-color);
+}
+/** Image Upload Info **/
+#app-candidate-images #candidateImageModal .modal-content{
+    background-color: var(--fauth-accent-dark-color);
+    color: #FFFFFF;
+}
+#app-candidate-images #candidateImageModal #upload-candidate-img-label{
+    width: 100px
+}
+#app-candidate-images #candidateImageModal #upload-candidate-img-label input{
+    visibility: hidden;
+    position: absolute;
+}

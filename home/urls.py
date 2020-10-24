@@ -21,5 +21,8 @@ urlpatterns = [
     path('api/candidate/single', dashboard_apis.fetch_candidate_info, name="api_fetch_candidate_info"),
     path('api/candidate/all', dashboard_apis.fetch_candidates, name="api_fetch_candidates"),
     path('api/candidate/update', dashboard_apis.update_candidate, name="api_update_candidate"),
-    path('api/candidate/delete', dashboard_apis.delete_candidate, name="api_delete_candidate")
+    path('api/candidate/delete', dashboard_apis.delete_candidate, name="api_delete_candidate"),
+    path('api/candidate/images', dashboard_apis.fetch_images, name="api_fetch_candidate_images"),
+    path('api/candidate/images/delete', dashboard_apis.delete_image, name="api_delete_candidate_images")
+
 ]
