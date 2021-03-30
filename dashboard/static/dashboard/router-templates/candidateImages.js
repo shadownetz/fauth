@@ -38,6 +38,7 @@ const candidateImages = {
             </div>
         </template>
     </div>
+    
     <!-- Imade Modal Info-->
     <div class="modal fade" id="candidateImageModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -50,13 +51,18 @@ const candidateImages = {
           </div>
           <div class="modal-body text-center">
             <p>
-                You are about to upload image(s) that will be used as an extra layer 
-                of <span class="text-warning">efficiency</span> when <span class="text-primary">recognizing</span> the selected candidate.
+                You are about to upload image that will be used as an extra layer 
+                of <span class="text-warning">efficiency</span> when <span class="text-primary">recognizing</span> [[candidate.name]].
             </p>
+            <div class="row justify-content-center align-content-center" v-if="upload_in_progress">
+                <div class="col-6">
+                    <progress-bar :mount="upload_in_progress" :curr_value="progress_value"></progress-bar>
+                </div>
+             </div>
           </div>
           <div class="modal-footer">
             <label id="upload-candidate-img-label" type="button" class="btn btn-primary" for="upload-candidate-img-btn">
-                <input type="file" id="upload-candidate-img-btn">Continue
+                <input type="file" id="upload-candidate-img-btn" @change="uploadImage">Continue
             </label>
           </div>
         </div>
@@ -72,11 +78,15 @@ const candidateImages = {
             loading: false,
             error: false,
             delete_in_progress: false,
+            upload_in_progress: false,
             progress_value: 0,
             message: '',
             fetch_images_url: '',
             delete_images_url: '',
-            images: []
+            add_image_url: '',
+            images: [],
+            candidate: {},
+            imageDataURIToBeUploaded: ''
         }
     },
     watch: {
@@ -96,7 +106,8 @@ const candidateImages = {
                     data: {id: candidate_id},
                     dataType: 'json',
                 });
-                this.images = response.images
+                this.images = response.images;
+                this.candidate = response.candidate
             }catch (e) {
                 this.error = true;
                 this.message = e.message
@@ -131,6 +142,9 @@ const candidateImages = {
                 });
                 if(response.status){
                     this.images.splice(action_index, 1);
+                    for(let i=0; i<this.images.length; i++){
+                        $('#action'+i).fadeOut('fast');
+                    }
                     toastr.success('Image Deleted')
                 }
                 else throw response
@@ -145,7 +159,54 @@ const candidateImages = {
             }
         },
         async uploadImage(event){
-            //
+            const file = event.target.files[0];
+            const fileUploadElem = $('#upload-candidate-img-btn');
+            const imageModal = $('#candidateImageModal');
+            if(!validateImageUpload([file], ['jpg', 'png', 'jpeg'])){
+                fileUploadElem.val("");
+                return toastr.warning("Please upload a valid image", 'Hey there!')
+            }
+            this.upload_in_progress = true;
+            let upload_interval = setInterval(()=>{
+                if(this.progress_value < 50){
+                    this.progress_value += 10;
+                }else{
+                    clearInterval(upload_interval)
+                }
+            },500);
+
+            let reader = new FileReader();
+            reader.onload = async (e)=>{
+                let imageURI = e.target.result;
+                try{
+                    let response = await $.ajax({
+                        url: this.add_image_url,
+                        type: 'POST',
+                        data: {
+                            id: this.$route.params.id,
+                            image: imageURI
+                        },
+                        dataType: 'json',
+                    });
+                    if(response.status){
+                        fileUploadElem.val('');
+                        imageModal.modal('hide');
+                        toastr.success('Candidate Images Updated');
+                        return this.fetchImages(this.$route.params.id)
+                    }
+                    else throw response
+                }catch (e) {
+                    fileUploadElem.val('');
+                    toastr.error(e.message, "Error while uploading image");
+                }finally {
+                    this.progress_value = 100;
+                    setTimeout(()=>{
+                        this.upload_in_progress = false;
+                        this.progress_value = 0;
+                    },1000);
+                }
+            };
+            reader.readAsDataURL(file);
         }
     },
     components: {
@@ -155,7 +216,17 @@ const candidateImages = {
         setTimeout(()=>{
             this.fetch_images_url = $('#api_fetch_candidate_images_url').val();
             this.delete_images_url = $('#api_delete_candidate_images_url').val();
-            this.fetchImages(this.$route.params.id)
+            this.add_image_url = $('#api_add_candidate_image_url').val();
+            this.fetchImages(this.$route.params.id);
         }, 500)
+    },
+    mounted(){
+        setTimeout(()=>{
+            let imageModal = $('#candidateImageModal');
+            imageModal.modal({
+                backdrop: 'static',
+                show: false
+            })
+        }, 1000)
     }
 };

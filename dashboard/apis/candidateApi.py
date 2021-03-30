@@ -81,7 +81,7 @@ def fetch_candidates(request):
     for candidate in _candidates:
         tmp_candidate = {}
         try:
-            _image = CandidateImage.objects.get(candidate=candidate)
+            _image = CandidateImage.objects.filter(candidate=candidate)[0]
         except CandidateImage.DoesNotExist:
             pass
         else:
@@ -174,9 +174,47 @@ def delete_candidate(request):
 def fetch_images(request):
     response = {
         'images': [],
+        'candidate': {}
     }
     if request.method == 'POST':
-        response['images'] = fetch_candidate_images(request.POST['id'])
+        try:
+            candidate = Candidate.objects.get(pk=request.POST['id'])
+            response['images'] = fetch_candidate_images(request.POST['id'])
+        except Exception:
+            pass
+        else:
+            response['candidate'] = {
+                'id': candidate.id,
+                'name': candidate.name
+            }
+    return JsonResponse(data=response)
+
+
+def add_image(request):
+    response = {
+        'status': False,
+        'message': ''
+    }
+    if request.method == 'POST':
+        try:
+            candidate = Candidate.objects.get(pk=request.POST['id'])
+        except Candidate.DoesNotExist:
+            response['message'] = 'Specified candidate does not exist'
+        else:
+            new_image = request.POST['image']   # image is in bytes
+            if new_image:
+                face_exist = compare_user_faces_from_db(new_image)
+                if not face_exist['err_message']:
+                    image_name = candidate.email.split("@")[0] or str(datetime.datetime.now())
+                    fauthImage = FauthImage(new_image, name=image_name)
+                    _image = fauthImage.get_file()
+                    new_candidate_image = CandidateImage(candidate=candidate, image=_image)
+                    new_candidate_image.save()
+                    response['status'] = True
+                else:
+                    response['message'] = 'No face was found in the uploaded image'
+            else:
+                response['message'] = 'Please specify a valid image to upload'
     return JsonResponse(data=response)
 
 
@@ -193,3 +231,32 @@ def delete_image(request):
         else:
             response['status'] = True
     return JsonResponse(data=response)
+
+
+def upload_images(request):
+    response = {
+        'status': True,
+        'message': '',
+        'images': []
+    }
+    if request.method == 'POST':
+        try:
+            candidate = Candidate.objects.get(pk=request.method.POST['id'])
+        except Candidate.DoesNotExist:
+            response['status'] = False
+            response['message'] = 'Invalid Request'
+        else:
+            new_images = request.method.POST['images']
+            for image in new_images:
+                fauth_image = FauthImage(image)
+                image_file = fauth_image.get_file()
+                candidate_image = CandidateImage.objects.create(
+                    candidate=candidate,
+                    image=image_file
+                )
+                response['images'].append({
+                    'id': candidate_image.id,
+                    'path': candidate_image.image.url
+                })
+            else:
+                response['status'] = False
