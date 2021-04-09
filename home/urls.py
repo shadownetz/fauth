@@ -29,4 +29,7 @@ urlpatterns = [
 
     path('api/user/get', userAPI.fetch_user_info, name="api_fetch_user_details"),
     path('api/user/update', userAPI.update_user_info, name="api_update_user_details"),
+    path('api/admin/fetch', userAPI.fetch_admins, name="api_fetch_admin_details"),
+    path('api/admin/update', userAPI.update_admin, name="api_update_admin_details"),
+    path('api/admin/delete', userAPI.delete_admin, name="api_delete_admin_details"),
 ]

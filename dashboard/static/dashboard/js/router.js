@@ -24,6 +24,11 @@ const routes = [
         name: 'ViewCandidateImages',
         component: candidateImages
     },
+    {
+        path:'/dashboard/admins',
+        name: 'ViewAdmins',
+        component: ViewAdmins
+    },
 ];
 
 const router = new VueRouter({
