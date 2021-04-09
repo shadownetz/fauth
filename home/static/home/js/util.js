@@ -1,8 +1,9 @@
+/**
+ * Attach loading overlay to element
+ * @param ref
+ * @returns {{hide(): void}}
+ */
 function loading(ref){
-    /**
-     * Attach loading overlay to element
-     * @type {jQuery.fn.init|jQuery|HTMLElement|Object}
-     */
     let element = $(ref);
     element.prepend(`
     <div id="loading">

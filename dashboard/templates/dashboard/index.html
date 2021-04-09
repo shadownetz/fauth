@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{% static 'dashboard/css/addCandidate.css' %}">
     <link rel="stylesheet" href="{% static 'dashboard/css/viewCandidate.css' %}">
     <link rel="stylesheet" href="{% static 'dashboard/css/viewCandidateImages.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/profile.css' %}">
 </head>
 <body>
 <div id="preloader">
@@ -108,7 +109,7 @@
                                 <a href="javascript:void(0)"><i class="fa fa-user-friends"></i> </a>
                                 <span class="app-tooltip" :style="{'marginTop': 49*3+'px'}">view candidate</span>
                             </div>
-                            <div>
+                            <div @click="$router.push({name: 'Profile'})">
                                 <a href="javascript:void(0)"><i class="fa fa-user-cog"></i> </a>
                                 <span class="app-tooltip" :style="{'marginTop': 49*4+'px'}">profile</span>
                             </div>
@@ -151,6 +152,9 @@
 <input type="hidden" id="api_fetch_candidate_images_url" value="{% url 'home:api_fetch_candidate_images' %}">
 <input type="hidden" id="api_delete_candidate_images_url" value="{% url 'home:api_delete_candidate_images' %}">
 <input type="hidden" id="api_add_candidate_image_url" value="{% url 'home:api_add_candidate_image' %}">
+<input type="hidden" id="api_user_id" value="{{ user.id }}">
+<input type="hidden" id="api_fetch_user_info_url" value="{% url 'home:api_fetch_user_details' %}">
+<input type="hidden" id="api_update_user_info_url" value="{% url 'home:api_update_user_details' %}">
 
 
 <script src="{% static 'home/vendors/jquery/jquery-3.5.1.min.js' %}"></script>
@@ -185,6 +189,7 @@
 <script src="{% static 'dashboard/router-templates/addCandidate.js' %}"></script>
 <script src="{% static 'dashboard/router-templates/viewCandidate.js' %}"></script>
 <script src="{% static 'dashboard/router-templates/candidateImages.js' %}"></script>
+<script src="{% static 'dashboard/router-templates/profile.js' %}"></script>
 <!-- End of router templates -->
 <script src="{% static 'dashboard/js/router.js' %}"></script>
 <script src="{% static 'dashboard/js/app.js' %}"></script>

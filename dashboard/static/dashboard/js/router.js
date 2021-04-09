@@ -15,10 +15,15 @@ const routes = [
         component: ViewCandidate
     },
     {
+        path:'/dashboard/profile',
+        name: 'Profile',
+        component: Profile
+    },
+    {
         path:'/dashboard/candidate-images/:id',
         name: 'ViewCandidateImages',
         component: candidateImages
-    }
+    },
 ];
 
 const router = new VueRouter({
