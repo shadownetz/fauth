@@ -168,13 +168,15 @@ const Profile = {
                 toastr.warning("No changes detected!");
                 return false
             }
-            if(this.user_mod.phone || this.user_mod.password){
+            if(this.user_mod.phone){
                 if(this.user_mod.phone <= 4){
                     toastr.error("Invalid phone number detected!");
                     return false;
                 }
-                if(this.user_mod.password.length < 8){
-                    toastr.warning("Password should be greater than 8 characters!");
+            }
+            if(this.user_mod.password){
+                if(this.user_mod.password.length !== 4){
+                    toastr.warning("Password should be up to just 4 characters!");
                     return false
                 }
             }

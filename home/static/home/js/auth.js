@@ -199,6 +199,7 @@ try{
                         return;
                     }
                 }
+                $("input[name='password']").val(this.passcodes.join(""));
                 this.$refs['fauth-login'].submit()
             }
         },

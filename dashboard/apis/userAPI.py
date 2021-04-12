@@ -44,7 +44,7 @@ def update_user_info(request):
                 user.email = request.POST['email']
             if request.POST['phone']:
                 user.phone = request.POST['phone']
-            if request.POST['password'] and len(request.POST['password']) >= 8:
+            if request.POST['password'] and len(request.POST['password']) == 4:
                 user.set_password(request.POST['password'])
             user.save()
             response['status'] = True

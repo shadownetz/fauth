@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login, authenticate, logout
 from django.views import View
 from .forms import *
+from dashboard.models import UserSetting
 from fauth.face import FauthImage
 from .utils import compare_user_faces_from_db
 
@@ -37,13 +38,19 @@ def sign_in(request):
         else:
             email = request.POST['email']
             password = request.POST['password']
-            user = authenticate(request, email=email, password=password)
-            if user is not None:
-                login(request, user)
-                if next_url:
-                    return redirect(next_url)
-                return redirect(reverse('home:dashboard:index'))
-            errors.append('Invalid credentials!')
+            user = User.objects.get(email=email)
+            user_settings = UserSetting.objects.get(user=user)
+            if user_settings.emailAuth:
+                user = authenticate(request, email=email, password=password)
+                if user is not None:
+                    login(request, user)
+                    if next_url:
+                        return redirect(next_url)
+                    return redirect(reverse('home:dashboard:index'))
+                else:
+                    errors.append('Invalid credentials!')
+            else:
+                errors.append('Email authentication is not enabled for this account')
     return render(request, 'home/login.html', {'errors': errors})
 
 
