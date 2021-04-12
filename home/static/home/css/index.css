@@ -163,6 +163,6 @@
         background-image: url("../images/bg/face-wireframe.png");
     }
     #fauth-main #main-body .switch_words p{
-        left: 0
+        left: 10px
     }
 }

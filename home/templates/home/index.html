@@ -13,7 +13,7 @@
                 </header>
                 <div class="row">
                     <div class="col-lg-7 col-md-12 offset-lg-5 text-center text-capitalize" id="main-body">
-                        <h1 class="animate__animated animate__fadeInUp anim-delay-03 description"><b>Facial Authentication System</b></h1>
+                        <h1 class="animate__animated animate__fadeInUp anim-delay-03 description pl-lg-0"><b>Facial Authentication System</b></h1>
                         <div class="switch_words">
                             <p>Automatically <span class="text-primary">recognize</span>  images and <span class="text-warning">retrieve</span>  related records...</p>
                             <p>Stores multiple individual images to achieve <span class="text-danger">high</span> <span class="text-info">accuracy</span></p>
@@ -21,12 +21,19 @@
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-12 offset-lg-5 text-center" id="fauth-options">
-                        <a href="{% url 'home:login' %}" data-toggle="tooltip" data-placement="bottom" title="login">
-                            <i class="fa fa-door-open"></i>
-                        </a>
-                        <a href="{% url 'home:register' %}" data-toggle="tooltip" data-placement="bottom" title="register">
-                            <i class="fa fa-plus"></i>
-                        </a>
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'home:login' %}" data-toggle="tooltip" data-placement="bottom" title="login">
+                                <i class="fa fa-door-open"></i>
+                            </a>
+                            <a href="{% url 'home:register' %}" data-toggle="tooltip" data-placement="bottom" title="register">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'home:dashboard:index' %}" data-toggle="tooltip" data-placement="bottom" title="go to dashboard">
+                                <i class="fa fa-wind"></i>
+                            </a>
+                        {% endif %}
+
                     </div>
                 </div>
             </div>

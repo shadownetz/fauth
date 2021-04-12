@@ -14,6 +14,8 @@ def index(request):
 
 def sign_in(request):
     errors = []
+    if request.user.is_authenticated:
+        return redirect(reverse('home:dashboard:index'))
     if request.method == 'POST':
         face_auth = request.POST['face_auth_login']
         next_url = request.POST['next']
@@ -72,6 +74,8 @@ def signout(request):
 class Register(View):
 
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect(reverse('home:dashboard:index'))
         register_form = RegisterForm()
         context = {
             'form': register_form,
