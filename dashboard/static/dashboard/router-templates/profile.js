@@ -165,14 +165,17 @@ const Profile = {
         },
         verifyCorrectUpdateInputs(){
             if(!this.user_mod.name && !this.user_mod.email && !this.user_mod.phone && !this.user_mod.password){
-                return toastr.warning("No changes detected!")
+                toastr.warning("No changes detected!");
+                return false
             }
             if(this.user_mod.phone || this.user_mod.password){
                 if(this.user_mod.phone <= 4){
-                    return toastr.error("Invalid phone number detected!")
+                    toastr.error("Invalid phone number detected!");
+                    return false;
                 }
                 if(this.user_mod.password.length < 8){
-                    return toastr.warning("Password should be greater than 8 characters!")
+                    toastr.warning("Password should be greater than 8 characters!");
+                    return false
                 }
             }
             return true
