@@ -1,6 +1,6 @@
 from typing import final
 from django.shortcuts import render, redirect, reverse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.views import View
 from .forms import *
 from fauth.face import FauthImage
@@ -57,6 +57,10 @@ def post_registration(request):
         pass
     return redirect(reverse('home:login'))
 
+
+def signout(request):
+    logout(request)
+    return redirect('home:login')
 
 class Register(View):
 
