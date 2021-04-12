@@ -33,4 +33,7 @@ urlpatterns = [
     path('api/admin/delete', userAPI.delete_admin, name="api_delete_admin_details"),
 
     path('api/log/fetch', mainAPI.fetch_logs, name="api_fetch_log_details"),
+
+    path('api/settings/update', userAPI.update_user_settings, name="api_update_settings"),
+    path('api/settings/fetch', userAPI.fetch_user_settings, name="api_fetch_settings"),
 ]

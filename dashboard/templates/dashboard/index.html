@@ -31,6 +31,8 @@
     <link rel="stylesheet" href="{% static 'dashboard/css/viewCandidateImages.css' %}">
     <link rel="stylesheet" href="{% static 'dashboard/css/profile.css' %}">
     <link rel="stylesheet" href="{% static 'dashboard/css/viewAdmins.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/userSettings.css' %}">
+
 </head>
 <body>
 <div id="preloader">
@@ -75,7 +77,9 @@
                         </div>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <h6 class="dropdown-header">fauth settings</h6>
-                            <a class="dropdown-item" href="#">settings</a>
+                            <router-link :to="{name: 'UserSettings'}" class="dropdown-item">
+                                settings
+                            </router-link>
                             <a class="dropdown-item" href="#">logout</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item disabled descrip" href="#">
@@ -160,6 +164,9 @@
 <input type="hidden" id="api_update_admin_url" value="{% url 'home:api_update_admin_details' %}">
 <input type="hidden" id="api_delete_admin_url" value="{% url 'home:api_delete_admin_details' %}">
 <input type="hidden" id="api_fetch_logs_url" value="{% url 'home:api_fetch_log_details' %}">
+<input type="hidden" id="api_fetch_settings_url" value="{% url 'home:api_fetch_settings' %}">
+<input type="hidden" id="api_update_settings_url" value="{% url 'home:api_update_settings' %}">
+
 
 
 <script src="{% static 'home/vendors/jquery/jquery-3.5.1.min.js' %}"></script>
@@ -197,6 +204,7 @@
 <script src="{% static 'dashboard/router-templates/profile.js' %}"></script>
 <script src="{% static 'dashboard/router-templates/viewAdmins.js' %}"></script>
 <script src="{% static 'dashboard/router-templates/viewLogs.js' %}"></script>
+<script src="{% static 'dashboard/router-templates/userSettings.js' %}"></script>
 <!-- End of router templates -->
 <script src="{% static 'dashboard/js/router.js' %}"></script>
 <script src="{% static 'dashboard/js/app.js' %}"></script>

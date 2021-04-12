@@ -1,8 +1,10 @@
 from django.http import JsonResponse
 from home.models import User, UserImage
+from dashboard.models import UserSetting
 from home.utils import compare_user_faces_from_db
 import datetime
 from fauth.face import FauthImage
+import json
 
 
 def fetch_user_info(request):
@@ -108,9 +110,9 @@ def update_admin(request):
             admin.name = request.POST['name']
             admin.email = request.POST['email']
             admin.phone = request.POST['phone']
-            admin.is_active = bool(request.POST['is_active'])
-            admin.is_staff = bool(request.POST['is_staff'])
-            admin.is_superuser = bool(request.POST['is_superuser'])
+            admin.is_active = json.loads(request.POST['is_active'])
+            admin.is_staff = json.loads(request.POST['is_staff'])
+            admin.is_superuser = json.loads(request.POST['is_superuser'])
             admin.save()
             if image_ref:
                 image_ref.save()
@@ -131,4 +133,44 @@ def delete_admin(request):
             response['status'] = True
         except User.DoesNotExist:
             response['message'] = 'Admin does not exist'
+    return JsonResponse(data=response)
+
+
+def fetch_user_settings(request):
+    response = {
+        "status": False,
+        "data": {},
+    }
+    if request.method == 'POST':
+        try:
+            user = User.objects.get(pk=request.POST['userId'])
+            user_settings = UserSetting.objects.get(user=user)
+        except User.DoesNotExist:
+            response['message'] = "Unknown User"
+        except UserSetting.DoesNotExist:
+            response['message'] = "Nothing to update, user settings does not exist"
+        else:
+            response['data']['emailAuth'] = user_settings.emailAuth
+            response['status'] = True
+    return JsonResponse(data=response)
+
+
+def update_user_settings(request):
+    response = {
+        "status": False,
+        "data": None,
+        "message": ""
+    }
+    if request.method == 'POST':
+        try:
+            user = User.objects.get(pk=request.POST['userId'])
+            user_settings = UserSetting.objects.get(user=user)
+        except User.DoesNotExist:
+            response['message'] = "Unknown User"
+        except UserSetting.DoesNotExist:
+            response['message'] = "Nothing to update, user settings does not exist"
+        else:
+            user_settings.emailAuth = json.loads(request.POST['emailAuth'])
+            user_settings.save()
+            response['status'] = True
     return JsonResponse(data=response)

@@ -34,6 +34,11 @@ const routes = [
         name: 'ViewLogs',
         component: ViewLogs
     },
+    {
+        path:'/dashboard/settings',
+        name: 'UserSettings',
+        component: UserSettings
+    },
 ];
 
 const router = new VueRouter({
