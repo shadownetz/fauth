@@ -29,6 +29,11 @@ const routes = [
         name: 'ViewAdmins',
         component: ViewAdmins
     },
+    {
+        path:'/dashboard/logs',
+        name: 'ViewLogs',
+        component: ViewLogs
+    },
 ];
 
 const router = new VueRouter({

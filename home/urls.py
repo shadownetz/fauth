@@ -1,8 +1,7 @@
 from django.urls import path, include
 from . import views
 from . import apis
-from dashboard.apis import candidateApi
-from dashboard.apis import userAPI
+from dashboard.apis import (candidateApi, userAPI, mainAPI)
 
 app_name = 'home'
 
@@ -32,4 +31,6 @@ urlpatterns = [
     path('api/admin/fetch', userAPI.fetch_admins, name="api_fetch_admin_details"),
     path('api/admin/update', userAPI.update_admin, name="api_update_admin_details"),
     path('api/admin/delete', userAPI.delete_admin, name="api_delete_admin_details"),
+
+    path('api/log/fetch', mainAPI.fetch_logs, name="api_fetch_log_details"),
 ]

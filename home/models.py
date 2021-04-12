@@ -6,6 +6,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+import datetime
 
 from .managers import UserManager
 
@@ -71,6 +72,10 @@ def candidate_directory_path(instance, filename):
     return 'images/candidates/{0}/{1}'.format(instance.candidate.email, filename)
 
 
+def log_directory_path(instance, filename):
+    return 'images/scanned/{0}/{1}'.format(datetime.datetime.now(), filename)
+
+
 class UserImage(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
     image = models.ImageField(upload_to=user_directory_path, null=True, blank=True)
@@ -84,6 +89,6 @@ class CandidateImage(models.Model):
 
 
 class Log(models.Model):
-    image = models.CharField(max_length=100, blank=True, null=True)
+    image = models.ImageField(upload_to=log_directory_path, null=True, blank=True)
     status = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)

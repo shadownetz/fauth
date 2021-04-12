@@ -1,4 +1,4 @@
-from .models import UserImage, CandidateImage, Candidate
+from .models import UserImage, CandidateImage, Candidate, Log
 from fauth.face import FauthImage, compare_faces
 import base64
 
@@ -57,6 +57,11 @@ def compare_candidate_faces_from_db(base64String: str) -> dict:
             finally:
                 return_data['data']['image'] = b64Image
                 break
+    new_log = Log(
+        image=unknown_image_file,
+        status=return_data['status']
+    )
+    new_log.save()
     return return_data
 
 
