@@ -124,8 +124,8 @@
     }
     #app-header .app-log-status{
         background-color: var(--fauth-accent-dark-color);
-        height: 80px;
-        max-height: 80px
+        min-height: 80px;
+        /*max-height: 80px*/
     }
     #app-navigation{
         position: absolute;
@@ -186,6 +186,20 @@
 @media screen and (min-width: 768px){
     #app-header{
         padding: 50px 10px 0 10px;
+    }
+    #app-header .app-log-status .content:after{
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 10%;
+        height: 70%;
+        width: 0;
+    }
+    #app-header .app-log-status .content.users:after{
+        border: 1px solid var(--info)
+    }
+    #app-header .app-log-status .content.candidates:after{
+        border: 1px solid var(--danger)
     }
 }
 
