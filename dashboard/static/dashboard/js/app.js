@@ -12,6 +12,12 @@ $(function(){
                     new_height: 0,
                     screen_height: screen.height
                 },
+                time_str: '',
+                date_str: '',
+                monthNames: ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ],
+                days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
             }
         },
         watch: {
@@ -19,10 +25,11 @@ $(function(){
                 if(!newVal){
                     let half = (this.screen_lock_settings.screen_height / 2);
                     if(this.screen_lock_settings.new_height > half){
-                        this.screen_lock_settings.new_height = this.screen_lock_settings.screen_height
+                        this.screen_lock_settings.new_height = this.screen_lock_settings.screen_height;
                     }else{
-                        this.screen_lock_settings.new_height = this.screen_lock_settings.default_height
+                        this.screen_lock_settings.new_height = this.screen_lock_settings.default_height;
                     }
+                    this.auto_decide_timer_visibility()
                 }
             },
             'screen_lock_settings.new_height': function(newVal){
@@ -34,6 +41,14 @@ $(function(){
             }
         },
         methods: {
+            auto_decide_timer_visibility(){
+                let half = (this.screen_lock_settings.screen_height / 2);
+                if(this.screen_lock_settings.new_height > half){
+                    $('.lock-content').fadeIn("slow")
+                }else{
+                    $('.lock-content').fadeOut("fast")
+                }
+            },
             mouse_move_on_locker_screen(event){
                 if(this.screen_lock_settings.pressed){
                     if(this.screen_lock_settings.last_position.x !== undefined){
@@ -65,7 +80,8 @@ $(function(){
                                 new_height = screen_height
                             }
                         }
-                        this.screen_lock_settings.new_height = new_height
+                        this.screen_lock_settings.new_height = new_height;
+                        this.auto_decide_timer_visibility()
                     }
                     this.screen_lock_settings.last_position = {
                         x: event.offsetX,
@@ -84,7 +100,12 @@ $(function(){
                 }else{
                     new_height = screen_height
                 }
-                this.screen_lock_settings.new_height = new_height
+                this.screen_lock_settings.new_height = new_height;
+                if(new_height === screen_height){
+                    $('.lock-content').fadeIn("slow");
+                }else{
+                    $('.lock-content').fadeOut("fast")
+                }
             },
             hideNav(){
                 let nav_items = $('#app-navigation > div:nth-child(1)');
@@ -92,6 +113,34 @@ $(function(){
                 nav_items.animate({
                     height: (h === '343px')?'49px':'343px',
                 }, 'slow');
+            },
+            showTime(){
+                const date = new Date();
+                let h = date.getHours(); // 0 - 23
+                let m = date.getMinutes(); // 0 - 59
+                let s = date.getSeconds(); // 0 - 59
+                let month = date.getMonth();
+                let _date = date.getDate();
+                let y = date.getFullYear();
+                let session = "AM";
+
+                this.date_str = `${this.monthNames[month]} ${_date}, ${y}`;
+
+                if(h === 0){
+                    h = 12;
+                }
+
+                if(h > 12){
+                    h = h - 12;
+                    session = "PM";
+                }
+
+                h = (h < 10) ? "0" + h : h;
+                m = (m < 10) ? "0" + m : m;
+                s = (s < 10) ? "0" + s : s;
+
+                this.time_str = h + "<span class='blink'>:</span>" + m + "<span class='blink'>:</span>" + s + " " + session;
+                setTimeout(()=>this.showTime(), 1000);
             }
         },
         created(){
@@ -99,7 +148,9 @@ $(function(){
             this.screen_lock_settings.default_height = this.screen_lock_settings.new_height =
                 Number.parseFloat($('#app-locker-screen').css('height').replace('px', ''));
             this.screen_lock_settings.screen_height =
-                (document.documentElement.clientHeight || document.body.clientHeight || 0)
+                (document.documentElement.clientHeight || document.body.clientHeight || 0);
+
+            this.showTime()
         },
         mounted(){
             /* remove preloader*/
@@ -125,7 +176,7 @@ $(function(){
             nav_items.on('mouseleave', function(event){
                 let tooltip = $(this).children('span')[0];
                 $(tooltip).fadeOut("fast")
-            })
+            });
 
         }
     })

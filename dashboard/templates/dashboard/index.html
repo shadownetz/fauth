@@ -47,9 +47,24 @@
              @mousedown="screen_lock_settings.pressed=true"
              @mouseup="screen_lock_settings.pressed=false"
              @mousemove="mouse_move_on_locker_screen($event)"
-             :style="{height: this.screen_lock_settings.new_height+'px'}"
+             :style="{height: screen_lock_settings.new_height+'px'}"
         >
             <div class="container-fluid">
+                <div class="lock-content">
+                    <div class="row justify-content-center">
+                        <img class="img-fluid mt-5" src="{% static 'home/images/logo/fauth_logo.png' %}" alt="FAUTH Logo">
+                    </div>
+                    <div class="row justify-content-lg-center">
+                        <div class="col-12 col-lg-3 text-center mt-5">
+                            <p><i class="fa fa-lock text-info"></i></p>
+                            <h1 class="noselect" v-html="time_str"></h1>
+                            <p class="noselect"> [[date_str]]</p>
+                            <p class="mt-5" @click="toggleScreenHeight">
+                                <i class="fa fa-lock-open fa-2x text-success"></i>
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div id="app-locker-btn" @click="toggleScreenHeight">
                         <i class="fa fa-shield-alt"></i>
