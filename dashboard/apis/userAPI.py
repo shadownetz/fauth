@@ -73,11 +73,11 @@ def fetch_admins(request):
                 "date_created": user.date_created,
             }
             try:
-                user_image = UserImage.objects.get(user=user)
+                user_image = UserImage.objects.filter(user=user)
             except UserImage.DoesNotExist:
                 print("user image does not exist")
             else:
-                user_data["avatar"] = user_image.image.url
+                user_data["avatar"] = user_image[0].image.url
             response["data"].append(user_data)
     return JsonResponse(data=response)
 
