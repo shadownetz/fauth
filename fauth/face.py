@@ -45,7 +45,7 @@ def compare_faces(image1, image2) -> dict:
     # No face found in unknown image
     if second_image_encodings and first_image_encodings:
         return {
-            'result': face_recognition.compare_faces([first_image_encodings[0]], second_image_encodings[0]),
+            'result': face_recognition.compare_faces([first_image_encodings[0]], second_image_encodings[0], 0.4),
             'message': ''
         }
     return {

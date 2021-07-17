@@ -16,13 +16,13 @@ def fetch_user_info(request):
         try:
             user_id = int(request.POST['id'])
             user = User.objects.get(pk=user_id)
-            user_image = UserImage.objects.get(user=user)
+            user_image = UserImage.objects.filter(user=user)
             response['data']['name'] = user.name
             response['data']['email'] = user.email
             response['data']['phone'] = user.phone
             response['data']['last_login'] = user.last_login
             response['data']['date_created'] = user.date_created
-            response['data']['avatar'] = user_image.image.url
+            response['data']['avatar'] = user_image[0].image.url
             response['status'] = True
         except Exception:
             pass
