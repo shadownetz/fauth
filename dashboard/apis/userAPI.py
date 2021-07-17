@@ -98,8 +98,8 @@ def update_admin(request):
                     image_name = request.POST['email'].split("@")[0] or str(datetime.datetime.now())
                     fauthImage = FauthImage(_image, name=image_name)
                     _image = fauthImage.get_file()
-                    image_ref = UserImage.objects.get(user=admin)
-                    image_ref.image = _image
+                    image_ref = UserImage.objects.create(user=admin, image=_image)
+                    # image_ref.image = _image
                 else:
                     raise ValueError
         except User.DoesNotExist:
@@ -114,8 +114,8 @@ def update_admin(request):
             admin.is_staff = json.loads(request.POST['is_staff'])
             admin.is_superuser = json.loads(request.POST['is_superuser'])
             admin.save()
-            if image_ref:
-                image_ref.save()
+            # if image_ref:
+            #     image_ref.save()
             response['status'] = True
     return JsonResponse(data=response)
 
