@@ -111,6 +111,9 @@
     #fauth-main #main-body{
         padding-top: 20%
     }
+    #fauth-main #main-body h1{
+        margin-right: 40px
+    }
     #fauth-main #main-body h1 b{
         color: var(--fauth-primary-color);
     }
@@ -155,14 +158,14 @@
 
 @media screen and (min-width: 1024px){
     #particles-js{
-        width:65%;
-        margin-left: 30%
+        width:50%;
+        margin-left: 45%
     }
     #fauth-main{
         min-height:100vh;
         background-image: url("../images/bg/face-wireframe.png");
     }
     #fauth-main #main-body .switch_words p{
-        left: 10px
+        left: 30%
     }
 }

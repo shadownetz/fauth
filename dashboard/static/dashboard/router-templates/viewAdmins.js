@@ -4,7 +4,7 @@ const ViewAdmins = {
 <div class="container-fluid" id="app-view-admins">
     <div class="row">
         <div class="col-12 px-0">
-            <table v-if="admins.length > 0 && !loading" class="table table-responsive table-striped">
+            <table v-if="admins.length > 0 && !loading" class="table table-responsive table-responsive-lg table-striped">
                 <thead>
                     <tr>
                         <th scope="col"></th>

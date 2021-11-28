@@ -5,8 +5,8 @@ const AddCandidate = {
     <div class="row">
         <div class="col-12 col-lg-4 pt-5 profile">
             <div class="row">
-                <div class="col-12 hide-overflow" style="max-height: 250px">
-                    <div class="row justify-content-center text-center">
+                <div class="col-12 hide-overflow" style="max-height: 300px">
+                    <div class="row justify-content-center text-center py-5">
                         <transition name="profileError" enter-active-class="animate__animated animate__fadeIn" leave-active-class="animate__animated animate__fadeOut">
                             <div class="profile-err" v-if="file_err_msg">
                                [[file_err_msg]]

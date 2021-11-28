@@ -13,14 +13,15 @@
                 </header>
                 <div class="row">
                     <div class="col-lg-7 col-md-12 offset-lg-5 text-center text-capitalize" id="main-body">
-                        <h1 class="animate__animated animate__fadeInUp anim-delay-03 description pl-lg-0"><b>Facial Authentication System</b></h1>
+                        <h1 class="animate__animated animate__fadeInUp anim-delay-03 text-right">
+                            <b>Facial Authentication System</b></h1>
                         <div class="switch_words">
                             <p>Automatically <span class="text-primary">recognize</span>  images and <span class="text-warning">retrieve</span>  related records...</p>
                             <p>Stores multiple individual images to achieve <span class="text-danger">high</span> <span class="text-info">accuracy</span></p>
                             <p>made with <i class="fa fa-heart text-success"></i> by <span class="text-danger">Jude</span></p>
                         </div>
                     </div>
-                    <div class="col-lg-7 col-md-12 offset-lg-5 text-center" id="fauth-options">
+                    <div class="col-lg-6 col-md-12 offset-lg-6 text-center" id="fauth-options">
                         {% if not user.is_authenticated %}
                             <a href="{% url 'home:login' %}" data-toggle="tooltip" data-placement="bottom" title="login">
                                 <i class="fa fa-door-open"></i>

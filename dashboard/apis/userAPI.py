@@ -77,7 +77,7 @@ def fetch_admins(request):
             except UserImage.DoesNotExist:
                 print("user image does not exist")
             else:
-                user_data["avatar"] = user_image[0].image.url
+                user_data["avatar"] = user_image[0].image.url if len(user_image) > 0 else ""
             response["data"].append(user_data)
     return JsonResponse(data=response)
 

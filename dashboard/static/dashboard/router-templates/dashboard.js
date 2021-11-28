@@ -61,7 +61,7 @@ const Dashboard = {
                         <div class="container-fluid details">
                             <div class="row">
                                 <div class="col-12">
-                                    <table class="table table-responsive">
+                                    <table class="table table-responsive-lg">
                                         <tr class="animate__animated animate__slideInLeft" style="animation-delay: .2s">
                                             <td class="no-border-top">
                                                 <i class="fa fa-user-alt"></i> Name

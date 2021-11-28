@@ -76,7 +76,7 @@
     }
     #app-header{
         z-index: 1;
-        padding: 31px 10px 0px 10px;
+        padding: 41px 10px 0px 10px;
         width: 100%;
     }
     #app-header > .app-logo img{
@@ -185,7 +185,7 @@
 
 @media screen and (min-width: 768px){
     #app-header{
-        padding: 50px 10px 0 10px;
+        padding: 60px 10px 0 10px;
     }
     #app-header .app-log-status .content:after{
         content: "";
@@ -208,7 +208,7 @@
         left: 50%;
     }
     #app-header{
-        padding: 30px 10px 0 10px;
+        padding: 50px 10px 0 10px;
     }
     #app-header .app-control-panel{
         width: 50px;

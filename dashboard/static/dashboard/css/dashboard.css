@@ -24,7 +24,7 @@
     }
     .app-dash > .part-1{
         background-color: var(--fauth-accent-dark-color);
-        border: 1px dotted var(--fauth-primary-color);
+        /*border: 1px dotted var(--fauth-primary-color);*/
         margin-bottom: 1%
     }
     .app-dash > .part-2{
@@ -49,21 +49,31 @@
         cursor: pointer;
     }
     .app-dash .dash-content.part-1 label{
-        box-shadow: -1px -1px 3px #03000D;
+        /*box-shadow: -1px -1px 3px #03000D;*/
+        background: linear-gradient(145deg, #04001f, #040024);
+        box-shadow:  16px 16px 32px #03001b,
+        -16px -16px 32px #050029;
         color: var(--fauth-primary-color);
     }
     .app-dash .dash-content label svg{
         font-size: 3em
     }
     .app-dash .dash-content.part-1 label:hover{
-        box-shadow: -1px 1px 5px #000000
+        /*box-shadow: -1px 1px 5px #000000;*/
+        box-shadow:  8px 8px 16px #03001b,
+        -8px -8px 16px #050029;
     }
     .app-dash .dash-content.part-2 label{
-        box-shadow: -1px -1px 3px var(--fauth-accent-dark-color);
+        /*box-shadow: -1px -1px 3px var(--fauth-accent-dark-color);*/
+        background: linear-gradient(145deg, #8676b8, #71639b);
+        box-shadow:  15px 15px 30px #6a5e92,
+        -15px -15px 30px #907fc6;
         color: var(--fauth-accent-color);
     }
     .app-dash .dash-content.part-2 label:hover{
-        box-shadow: -1px 1px 5px var(--fauth-accent-dark-color)
+        /*box-shadow: -1px 1px 5px var(--fauth-accent-dark-color);*/
+        box-shadow:  6px 6px 12px #6a5e92,
+        -6px -6px 12px #907fc6;
     }
     .app-dash .dash-content.part-2 #fauth_image_err{
         position: absolute;
@@ -212,7 +222,7 @@
         display: flex;
         justify-content: center;
         width: 100%;
-        padding-top: 50px;
+        padding-top: 90px;
     }
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1 .pro-img{
         width: 150px;
@@ -288,7 +298,7 @@
         width: 45%
     }
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1 .pro-img-box{
-        padding-top: 30px;
+        padding-top: 100px;
     }
     .app-dash #faceAuthLoadOverlay .authContainer .process.lvl1 .pro-img {
         width: 220px;
